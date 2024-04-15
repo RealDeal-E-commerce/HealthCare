@@ -12,17 +12,115 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-model Category {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(150) @unique
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  @@map("categories")
+
+model User {
+  id          Int      @id @default(autoincrement())
+  FirstName   String
+  LastName    String
+  Username    String    @unique
+  Email       String    @unique
+  Password    String
+  UserType    UserType  @default(Patient)
+  Speciality  String
+  PhoneNumber String
+  ImageUrl    String
+  appointments Appointment[]
+  ratingsComments RatingsComment[]
+  blogs       Blog[]
 }
-model Tag {
-  id        Int       @id @default(autoincrement())
-  name      String    @db.VarChar(150) @unique
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  @@map("tags")
+
+model Doctor {
+  id          Int      @id @default(autoincrement())
+  FirstName   String
+  LastName    String
+  Username    String    @unique
+  Email       String    @unique
+  Password    String
+  PhoneNumber String?
+  ImageUrl    String
+  Speciality  String
+  appointments Appointment[]  
+}
+
+model Message {
+  id      Int    @id @default(autoincrement())
+  content String
+}
+
+model Appointment {
+  id                  Int       @id @default(autoincrement())
+  AppointmentTime     DateTime
+  Status              AppointmentStatus @default(Pending)
+  PaymentStatus       PaymentStatus    @default(Unpaid)
+  AppointmentDepartment String
+  doctorId             Int
+  doctor              Doctor      @relation(fields: [doctorId], references: [id])
+  userId              Int
+  user                User        @relation(fields: [userId], references: [id])
+}
+
+model RatingsComment {
+  id      Int    @id @default(autoincrement())
+  rating  Int
+  review  String
+  imageSrc String
+  name    String
+  userId  Int
+  user    User   @relation(fields: [userId], references: [id])
+}
+
+model Admin {
+  id       Int     @id @default(autoincrement())
+  Username String  @unique
+  Email    String  @unique
+  Password String
+}
+
+model Payments {
+  id          Int     @id @default(autoincrement())
+  Amount      Float
+  PaymentDate DateTime
+}
+
+model Blog {
+  id        Int      @id @default(autoincrement())
+  Title     String
+  Text      String
+  ImageUrl  String
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+  comments  Comment[]
+}
+
+model Comment {
+  id      Int     @id @default(autoincrement())
+  author  String
+  comment String
+  timestamp DateTime
+  blogId  Int
+  blog    Blog    @relation(fields: [blogId], references: [id])
+}
+
+model Product {
+  id       Int    @id @default(autoincrement())
+  name     String
+  price    Float
+  ImageUrl String
+  Category String
+}
+
+enum UserType {
+  Patient
+  Doctor
+}
+
+enum AppointmentStatus {
+  Pending
+  Accepted
+  Rejected
+}
+
+enum PaymentStatus {
+  Paid
+  Unpaid
 }

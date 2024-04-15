@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useAppSelector, useAppDispatch, useAppStore } from './lib/hooks'
 import { fetchUser } from "./lib/userSlice";
 import { useEffect,useRef } from "react";
+import Navbar from "./components/Navbar";
+
 export default function Home() {
    // Initialize the store with the product information
 
@@ -19,7 +21,7 @@ useEffect(()=>{
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <>
-      homePage
+      <Navbar/>
       </>
     </main>
   );
