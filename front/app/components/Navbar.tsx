@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch, useAppStore } from '../lib/hooks'
 import Link from 'next/link';
-import { logout } from '../lib/authSlice';
+// import { logout } from '../lib/authSlice';
 import styles from '../styles/Navbar.module.css'
 
 const Navbar: React.FC = () => {
@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    dispatch(logout());
+    // dispatch(logout());
   };
 
   return (
@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
          <button className={styles.loginButton}>Log In</button>
         </Link>
         
-        {isLoggedIn ? (
+        {!isLoggedIn ? (
           <div className={styles.dropdown}>
               <img
                 className={styles.profileIcon} 

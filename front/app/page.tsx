@@ -1,5 +1,4 @@
 'use client'
-import Image from "next/image";
 
 import { useAppSelector, useAppDispatch, useAppStore } from './lib/hooks'
 import { fetchUser } from "./lib/userSlice";
