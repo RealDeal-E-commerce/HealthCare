@@ -17,12 +17,15 @@ const Navbar: React.FC = () => {
 
   return (
     <div className={styles.divNavbar}>
+      
+
+      <div className={styles.navLinks}>
       <div className={styles.logoContainer}>
         <Link href="/">
           
             <img
               className={styles.logo}
-              src="/path-to-your-logo-image.png"
+              src="https://s3-alpha-sig.figma.com/img/efb1/3ff6/87f33e562a35e98a4b2866ad981588b7?Expires=1714348800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XPzVoEbf5fGTXpQWfojiNqWXMObFFvp-jDa1CJ6LxfaEmffDK1VuxjROjvvmfjL~Vh5R~W29vufdEaJtGGX0QZgYq~SXm445Bsd9mwZ~HMssWd~pI5423RQKJQsdU3fNKkHNS94dTWhPoVGEOBc4xrZOcaR9MNw10N1V0eQ9lUixtr0305B23bXH8cLiNQCc1an1vQ2A2ocMKXAwruZ4TZ51ndkquo9defr9H6ZOEMoFt3Nz8XVJgr9T19A9MbbW7pim1vvzievveK0XzwASOIKCiSaxlGw8kpLX6lPR1tppcT0cU~F1gEeLscVnSRzUaD8kri6HNMw6wbDNcogvZw__"
               alt="Logo"
             />
         
@@ -33,55 +36,61 @@ const Navbar: React.FC = () => {
          
         </Link>
       </div>
-
-      <div className={styles.navLinks}>
-        <Link href="/">
-          <a className={styles.navLink}>HOME</a>
+        <Link className={styles.navLink} href="/">
+         HOME
         </Link>
-        <Link href="/service">
-          <a className={styles.navLink}>Service</a>
+        <Link className={styles.navLink} href="/service">
+         Service
         </Link>
-        <Link href="/contact">
-          <a className={styles.navLink}>Contact Us</a>
+        <Link className={styles.navLink} href="/contact">
+         Contact Us
         </Link>
-        <Link href="/bloglist">
-          <a className={styles.navLink}>Blogs</a>
+        <Link className={styles.navLink} href="/bloglist">
+         Blogs
         </Link>
-        <Link href="/Pharmacy">
-          <a className={styles.navLink}>Pharmacy</a>
+        <Link className={styles.navLink} href="/Pharmacy">
+          Pharmacy
         </Link>
-        <Link href="/doctorlist">
-          <a className={styles.navLink}>Doctors</a>
+        <Link className={styles.navLink} href="/doctorlist">
+          Doctors
         </Link>
-        <Link href="/profile">
-          <a className={styles.navLink}>Profile</a>
+        <Link className={styles.navLink} href="/sign up page">
+          Sign Up
         </Link>
-
+        <Link href="/login">
+         <button className={styles.loginButton}>Log In</button>
+        </Link>
+        
         {isLoggedIn ? (
           <div className={styles.dropdown}>
-            <a className={styles.profile} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
               <img
-                className={styles.profileIcon}
-                src="/path-to-profile-icon.png"
-                alt="Profile Icon"
+                className={styles.profileIcon} 
+                // src="/path-to-profile-icon.png"
+                alt="Profile"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               />
-            </a>
+            
             {isDropdownOpen && (
               <div className={styles.dropdownContent}>
+                <Link className={styles.navLink} href="/profile">
+                 Profile
+                </Link><br />
                 <a onClick={handleLogout}>Logout</a>
               </div>
             )}
           </div>
-        ) : (
+        )
+         : (
           <>
-            <Link href="/signup">
-              <a className={styles.navLink}>Sign Up</a>
+            <Link className={styles.navLink} href="/signup">
+             Sign Up
             </Link>
             <Link href="/login">
               <button className={styles.loginButton}>Log In</button>
             </Link>
           </>
-        )}
+        )
+        }
       </div>
     </div>
   );

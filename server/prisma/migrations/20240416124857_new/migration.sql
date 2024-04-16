@@ -1,48 +1,33 @@
-/*
-  Warnings:
-
-  - You are about to drop the `categories` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `tags` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `categories`;
-
--- DropTable
-DROP TABLE `tags`;
-
 -- CreateTable
 CREATE TABLE `User` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `FirstName` VARCHAR(191) NOT NULL,
-    `LastName` VARCHAR(191) NOT NULL,
-    `Username` VARCHAR(191) NOT NULL,
-    `Email` VARCHAR(191) NOT NULL,
-    `Password` VARCHAR(191) NOT NULL,
-    `UserType` ENUM('Patient', 'Doctor') NOT NULL DEFAULT 'Patient',
-    `Speciality` VARCHAR(191) NOT NULL,
-    `PhoneNumber` VARCHAR(191) NOT NULL,
-    `ImageUrl` VARCHAR(191) NOT NULL,
+    `firstName` VARCHAR(191) NOT NULL,
+    `lastName` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NOT NULL,
+    `phoneNumber` VARCHAR(191) NOT NULL,
+    `imageUrl` VARCHAR(191) NOT NULL,
+    `role` ENUM('doctor', 'user') NOT NULL DEFAULT 'user',
+    `doctorId` INTEGER NULL,
 
-    UNIQUE INDEX `User_Username_key`(`Username`),
-    UNIQUE INDEX `User_Email_key`(`Email`),
+    UNIQUE INDEX `User_email_key`(`email`),
+    UNIQUE INDEX `User_doctorId_key`(`doctorId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Speciality` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `speciality` VARCHAR(191) NOT NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Doctor` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `FirstName` VARCHAR(191) NOT NULL,
-    `LastName` VARCHAR(191) NOT NULL,
-    `Username` VARCHAR(191) NOT NULL,
-    `Email` VARCHAR(191) NOT NULL,
-    `Password` VARCHAR(191) NOT NULL,
-    `PhoneNumber` VARCHAR(191) NULL,
-    `ImageUrl` VARCHAR(191) NOT NULL,
-    `Speciality` VARCHAR(191) NOT NULL,
+    `specialityId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Doctor_Username_key`(`Username`),
-    UNIQUE INDEX `Doctor_Email_key`(`Email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -57,10 +42,10 @@ CREATE TABLE `Message` (
 -- CreateTable
 CREATE TABLE `Appointment` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `AppointmentTime` DATETIME(3) NOT NULL,
-    `Status` ENUM('Pending', 'Accepted', 'Rejected') NOT NULL DEFAULT 'Pending',
-    `PaymentStatus` ENUM('Paid', 'Unpaid') NOT NULL DEFAULT 'Unpaid',
-    `AppointmentDepartment` VARCHAR(191) NOT NULL,
+    `appointmentTime` DATETIME(3) NOT NULL,
+    `status` ENUM('pending', 'accepted', 'rejected') NOT NULL DEFAULT 'pending',
+    `paymentStatus` ENUM('paid', 'unpaid') NOT NULL DEFAULT 'unpaid',
+    `appointmentDepartment` VARCHAR(191) NOT NULL,
     `doctorId` INTEGER NOT NULL,
     `userId` INTEGER NOT NULL,
 
@@ -82,20 +67,20 @@ CREATE TABLE `RatingsComment` (
 -- CreateTable
 CREATE TABLE `Admin` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `Username` VARCHAR(191) NOT NULL,
-    `Email` VARCHAR(191) NOT NULL,
-    `Password` VARCHAR(191) NOT NULL,
+    `username` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `Admin_Username_key`(`Username`),
-    UNIQUE INDEX `Admin_Email_key`(`Email`),
+    UNIQUE INDEX `Admin_username_key`(`username`),
+    UNIQUE INDEX `Admin_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Payments` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `Amount` DOUBLE NOT NULL,
-    `PaymentDate` DATETIME(3) NOT NULL,
+    `amount` DOUBLE NOT NULL,
+    `paymentDate` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -103,9 +88,9 @@ CREATE TABLE `Payments` (
 -- CreateTable
 CREATE TABLE `Blog` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `Title` VARCHAR(191) NOT NULL,
-    `Text` VARCHAR(191) NOT NULL,
-    `ImageUrl` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `text` VARCHAR(191) NOT NULL,
+    `imageUrl` VARCHAR(191) NOT NULL,
     `authorId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -127,11 +112,17 @@ CREATE TABLE `Product` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `price` DOUBLE NOT NULL,
-    `ImageUrl` VARCHAR(191) NOT NULL,
-    `Category` VARCHAR(191) NOT NULL,
+    `imageUrl` VARCHAR(191) NOT NULL,
+    `category` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `User` ADD CONSTRAINT `User_doctorId_fkey` FOREIGN KEY (`doctorId`) REFERENCES `Doctor`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Doctor` ADD CONSTRAINT `Doctor_specialityId_fkey` FOREIGN KEY (`specialityId`) REFERENCES `Speciality`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Appointment` ADD CONSTRAINT `Appointment_doctorId_fkey` FOREIGN KEY (`doctorId`) REFERENCES `Doctor`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

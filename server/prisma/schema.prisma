@@ -12,34 +12,39 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+enum Role {
+  doctor
+  user
 
+}
 model User {
-  id          Int      @id @default(autoincrement())
-  FirstName   String
-  LastName    String
-  Username    String    @unique
-  Email       String    @unique
-  Password    String
-  UserType    UserType  @default(Patient)
-  Speciality  String
-  PhoneNumber String
-  ImageUrl    String
+  id          Int        @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  email       String      @unique
+  password    String
+  phoneNumber String
+  imageUrl    String
   appointments Appointment[]
   ratingsComments RatingsComment[]
+  role  Role @default(user)
   blogs       Blog[]
+  doctor      Doctor?     @relation(fields: [doctorId], references: [id])
+  doctorId    Int?        @unique
+}
+model Speciality {
+  id          Int      @id @default(autoincrement())
+  speciality  String
+  doctors Doctor[]
 }
 
 model Doctor {
   id          Int      @id @default(autoincrement())
-  FirstName   String
-  LastName    String
-  Username    String    @unique
-  Email       String    @unique
-  Password    String
-  PhoneNumber String?
-  ImageUrl    String
-  Speciality  String
-  appointments Appointment[]  
+  specialityId Int
+  speciality Speciality @relation(fields: [specialityId], references: [id])
+  appointments Appointment[]
+  user  User?
+
 }
 
 model Message {
@@ -49,10 +54,10 @@ model Message {
 
 model Appointment {
   id                  Int       @id @default(autoincrement())
-  AppointmentTime     DateTime
-  Status              AppointmentStatus @default(Pending)
-  PaymentStatus       PaymentStatus    @default(Unpaid)
-  AppointmentDepartment String
+  appointmentTime     DateTime
+  status              AppointmentStatus @default(pending)
+  paymentStatus       PaymentStatus    @default(unpaid)
+  appointmentDepartment String
   doctorId             Int
   doctor              Doctor      @relation(fields: [doctorId], references: [id])
   userId              Int
@@ -71,22 +76,22 @@ model RatingsComment {
 
 model Admin {
   id       Int     @id @default(autoincrement())
-  Username String  @unique
-  Email    String  @unique
-  Password String
+  username String  @unique
+  email    String  @unique
+  password String
 }
 
 model Payments {
   id          Int     @id @default(autoincrement())
-  Amount      Float
-  PaymentDate DateTime
+  amount      Float
+  paymentDate DateTime
 }
 
 model Blog {
   id        Int      @id @default(autoincrement())
-  Title     String
-  Text      String
-  ImageUrl  String
+  title     String
+  text      String
+  imageUrl  String
   authorId  Int
   author    User     @relation(fields: [authorId], references: [id])
   comments  Comment[]
@@ -105,22 +110,22 @@ model Product {
   id       Int    @id @default(autoincrement())
   name     String
   price    Float
-  ImageUrl String
-  Category String
+  imageUrl String
+  category String
 }
 
 enum UserType {
-  Patient
-  Doctor
+  patient
+  doctor
 }
 
 enum AppointmentStatus {
-  Pending
-  Accepted
-  Rejected
+  pending
+  accepted
+  rejected
 }
 
 enum PaymentStatus {
-  Paid
-  Unpaid
+  paid
+  unpaid
 }
