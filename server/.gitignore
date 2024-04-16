@@ -35,4 +35,5 @@ bower_components/
 .floo
 .flooignore
 .flooignore
-/prisma/migrations
+.env
+prisma/migrations
