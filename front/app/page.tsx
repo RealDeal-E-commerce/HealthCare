@@ -5,6 +5,8 @@ import { fetchUser } from "./lib/userSlice";
 import { useEffect,useRef } from "react";
 import Navbar from "./components/Navbar";
 import Home from './components/Home'
+import SignUp from '../app/Login/page'
+
 
 export default function home() {
    // Initialize the store with the product information
@@ -21,6 +23,7 @@ useEffect(()=>{
   return (
     <main className="flex min-h-screen flex-col items-center ">
        <Home/>
+
      
     </main>
   );
