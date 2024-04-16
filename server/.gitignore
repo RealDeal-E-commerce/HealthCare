@@ -28,11 +28,13 @@ client/dist/bundle.js
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 node_modules/
 bower_components/
-/package-lock.json
+
 # Floobits
 .floo
 .floobit
 .floo
 .flooignore
 .flooignore
-/prisma/migrations
+.env
+prisma/migrations
+package-lock.json
