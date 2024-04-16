@@ -4,7 +4,7 @@
 # Logs
 logs
 *.log
-
+package-lock.json
 # Runtime data
 pids
 *.pid
@@ -28,7 +28,7 @@ client/dist/bundle.js
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 node_modules/
 bower_components/
-/package-lock.json
+
 # Floobits
 .floo
 .floobit
