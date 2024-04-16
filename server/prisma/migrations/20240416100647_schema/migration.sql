@@ -1,16 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `categories` table. If the table is not empty, all the data it contains will be lost.
-  - You are about to drop the `tags` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `categories`;
-
--- DropTable
-DROP TABLE `tags`;
-
 -- CreateTable
 CREATE TABLE `User` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
@@ -23,26 +10,29 @@ CREATE TABLE `User` (
     `Speciality` VARCHAR(191) NOT NULL,
     `PhoneNumber` VARCHAR(191) NOT NULL,
     `ImageUrl` VARCHAR(191) NOT NULL,
+    `role` ENUM('doctor', 'user') NOT NULL DEFAULT 'user',
+    `doctorId` INTEGER NULL,
 
     UNIQUE INDEX `User_Username_key`(`Username`),
     UNIQUE INDEX `User_Email_key`(`Email`),
+    UNIQUE INDEX `User_doctorId_key`(`doctorId`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Speciality` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `Speciality` VARCHAR(191) NOT NULL,
+    `specialityId` INTEGER NOT NULL,
+
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Doctor` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `FirstName` VARCHAR(191) NOT NULL,
-    `LastName` VARCHAR(191) NOT NULL,
-    `Username` VARCHAR(191) NOT NULL,
-    `Email` VARCHAR(191) NOT NULL,
-    `Password` VARCHAR(191) NOT NULL,
-    `PhoneNumber` VARCHAR(191) NULL,
-    `ImageUrl` VARCHAR(191) NOT NULL,
-    `Speciality` VARCHAR(191) NOT NULL,
+    `specialityId` INTEGER NOT NULL,
 
-    UNIQUE INDEX `Doctor_Username_key`(`Username`),
-    UNIQUE INDEX `Doctor_Email_key`(`Email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -132,6 +122,12 @@ CREATE TABLE `Product` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `User` ADD CONSTRAINT `User_doctorId_fkey` FOREIGN KEY (`doctorId`) REFERENCES `Doctor`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Doctor` ADD CONSTRAINT `Doctor_specialityId_fkey` FOREIGN KEY (`specialityId`) REFERENCES `Speciality`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Appointment` ADD CONSTRAINT `Appointment_doctorId_fkey` FOREIGN KEY (`doctorId`) REFERENCES `Doctor`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

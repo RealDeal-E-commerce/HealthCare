@@ -13,6 +13,19 @@ export interface User {
     ratingsComments: RatingsComment[];
     blogs: Blog[];
 }
+ export interface SignUpState {
+  loading: boolean;
+  error: string | null;
+  success: boolean;
+}
+ export interface SignInState {
+  loading: boolean;
+  error: string | null;
+  success: boolean;
+}
+
+
+
 export enum UserType {
   Patient = 'Patient',
   Doctor = 'Doctor',

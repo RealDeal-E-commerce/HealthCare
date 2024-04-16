@@ -1,10 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+const { user } = require('../models/prisma');
 
-
-
-const { User } = require('../database-mysql/index');
-
-const prisma = new PrismaClient();
 
 
 const getAllUsers = async (req, res) => {
@@ -62,6 +57,7 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete user' });
   }
 };
+
 module.exports = {
   getAllUsers,
   updateUser,
