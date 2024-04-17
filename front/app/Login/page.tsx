@@ -1,9 +1,10 @@
-'use client'
+"use client";
+
 import React, { useState, ChangeEvent } from "react";
 import { useAppDispatch } from "../lib/hooks";
 import { signup } from '../lib/SignUpSlice';
-import  './page.css';
-
+import Navbar from '../components/Navbar';
+import './page.css';
 
 interface SignupProps {}
 
@@ -35,8 +36,10 @@ const Signup: React.FC<SignupProps> = () => {
     dispatch(signup(body));
   };
   
+  const handleSignUpClick = () => {
+    window.location.href = "/SignIn";
+  };
   
-
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     switch (name) {
@@ -70,91 +73,108 @@ const Signup: React.FC<SignupProps> = () => {
   };
 
   return (
-    <div className="signup-container">
-      <div className="form doctor-form">
-        <form onSubmit={handleSubmit}>
-        <input
-            type="text"
-            placeholder="FirstName"
-            name="firstName"
-            value={firstName}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
-          
-          <input
-            type="text"
-            placeholder="LastName"
-            name="lastName"
-            value={lastName}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            value={email}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
-          <input
-            type="text"
-            placeholder="Phone Number"
-            name="phoneNumber"
-            value={phoneNumber}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
-          <select
-            name="role"
-            value={role}
-            onChange={handleChange}
-            required
-            className="form-input"
-          >
-            <option value="">Select Role</option>
-            <option value="Doctor">Doctor</option>
-            <option value="Patient">Patient</option>
-          </select>
-          {role === "Doctor" && (
+    <div>
+      <Navbar />
+      <div className="signup-container">
+      <img
+              src="https://st2.depositphotos.com/1044737/9651/i/950/depositphotos_96519888-stock-photo-doctors-medical-appointment-doctor-nurse.jpg"
+              alt="Your Image"
+              className="signup-image"
+            />
+            
+        <div className="form doctor-form">
+          <form onSubmit={handleSubmit}>
+         
             <input
               type="text"
-              placeholder="Specialization"
-              name="speciality"
-              value={speciality}
+              placeholder="FirstName"
+              name="firstName"
+              value={firstName}
               onChange={handleChange}
               required
               className="form-input"
             />
-          )}
-          <input
-            type="text"
-            placeholder="Profile Image URL"
-            name="imageUrl"
-            value={image}
-            onChange={handleChange}
-            required
-            className="form-input"
-          />
-          <button type="submit" className="submit-button">Sign Up</button>
-          <button type="button" className="signin-link" onClick={() => { window.location.href = "/SignIn"; }}>
-          Already have an account? Sign in
-        </button>
-        </form>
+            <input
+              type="text"
+              placeholder="LastName"
+              name="lastName"
+              value={lastName}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              value={email}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+            <input
+              type="text"
+              placeholder="Phone Number"
+              name="phoneNumber"
+              value={phoneNumber}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+            <select
+              name="role"
+              value={role}
+              onChange={handleChange}
+              required
+              className="form-input"
+            >
+              <option value="">Select Role</option>
+              <option value="Doctor">Doctor</option>
+              <option value="Patient">Patient</option>
+            </select>
+            {role === "Doctor" && (
+              <input
+                type="text"
+                placeholder="Specialization"
+                name="speciality"
+                value={speciality}
+                onChange={handleChange}
+                required
+                className="form-input"
+              />
+            )}
+            <input
+              type="text"
+              placeholder="Profile Image URL"
+              name="imageUrl"
+              value={image}
+              onChange={handleChange}
+              required
+              className="form-input"
+            />
+            <button type="submit" className="submit-button" onClick={handleSignUpClick}>
+              Sign Up
+            </button>
+            <button
+              type="button"
+              className="signin-link"
+              onClick={() => {
+                window.location.href = "/SignIn";
+              }}
+            >
+              Already have an account? Sign in
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
