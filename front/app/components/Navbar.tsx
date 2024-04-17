@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
          <button className={styles.loginButton}>Log In</button>
         </Link>
         
-        {!isLoggedIn ? (
+        {isLoggedIn ? (
           <div className={styles.dropdown}>
               <img
                 className={styles.profileIcon} 
