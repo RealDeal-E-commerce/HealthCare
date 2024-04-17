@@ -1,26 +1,21 @@
 'use client'
-import { useState, ChangeEvent } from "react";
-import axios from "axios";
-// import Dropzone from 'react-dropzone';
+import React, { useState, ChangeEvent } from "react";
 import { useAppDispatch } from "../lib/hooks";
 import { signup } from '../lib/SignUpSlice';
-import { User } from '../types/types';
+import  './page.css';
+
 
 interface SignupProps {}
 
 const Signup: React.FC<SignupProps> = () => {
-  const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [role, setRole] = useState<string>("user");
-  const [error, setError] = useState<string>("");
   const [speciality, setSpecialization] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [image, setImage] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
   
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -39,6 +34,8 @@ const Signup: React.FC<SignupProps> = () => {
     
     dispatch(signup(body));
   };
+  
+  
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -72,14 +69,29 @@ const Signup: React.FC<SignupProps> = () => {
     }
   };
 
-  const handleImageDrop = async (acceptedFiles: File[]) => {
-    // Implement image upload logic here
-  };
-
   return (
-    <div>
-      <div className="form doctor-form" style={{ width: "50%", display: "flex", flexDirection: "column", alignItems: "center", marginLeft:'340px',backgroundColor:'white'}}>
+    <div className="signup-container">
+      <div className="form doctor-form">
         <form onSubmit={handleSubmit}>
+        <input
+            type="text"
+            placeholder="FirstName"
+            name="firstName"
+            value={firstName}
+            onChange={handleChange}
+            required
+            className="form-input"
+          />
+          
+          <input
+            type="text"
+            placeholder="LastName"
+            name="lastName"
+            value={lastName}
+            onChange={handleChange}
+            required
+            className="form-input"
+          />
           <input
             type="email"
             placeholder="Email"
@@ -87,30 +99,7 @@ const Signup: React.FC<SignupProps> = () => {
             value={email}
             onChange={handleChange}
             required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            value={password}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            placeholder="First Name"
-            name="firstName"
-            value={firstName}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            name="lastName"
-            value={lastName}
-            onChange={handleChange}
-            required
+            className="form-input"
           />
           <input
             type="text"
@@ -119,12 +108,23 @@ const Signup: React.FC<SignupProps> = () => {
             value={phoneNumber}
             onChange={handleChange}
             required
+            className="form-input"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+            required
+            className="form-input"
           />
           <select
             name="role"
             value={role}
             onChange={handleChange}
             required
+            className="form-input"
           >
             <option value="">Select Role</option>
             <option value="Doctor">Doctor</option>
@@ -138,6 +138,7 @@ const Signup: React.FC<SignupProps> = () => {
               value={speciality}
               onChange={handleChange}
               required
+              className="form-input"
             />
           )}
           <input
@@ -147,8 +148,12 @@ const Signup: React.FC<SignupProps> = () => {
             value={image}
             onChange={handleChange}
             required
+            className="form-input"
           />
-          <button type="submit">Sign Up</button>
+          <button type="submit" className="submit-button">Sign Up</button>
+          <button type="button" className="signin-link" onClick={() => { window.location.href = "/SignIn"; }}>
+          Already have an account? Sign in
+        </button>
         </form>
       </div>
     </div>
