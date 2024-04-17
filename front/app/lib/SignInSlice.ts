@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction,createAsyncThunk} from '@reduxjs/toolkit';
 import { AppThunk } from './store';
 import axios from 'axios'
 import {SignInState} from '../types/types'
@@ -10,19 +10,23 @@ const initialState: SignInState = {
   error: null,
   success: false,
 };
-export const signIn = (body:any)=> async () => {
-  try {
-  
 
-    const response = await axios.post('http://localhost:3001/api/auth/login',body)
-
-    if (response.status === 200) {
-       localStorage.setItem('token',response.data.token)
-    } 
-  } catch (error) {
-   console.log('error',error)
+export const signIn = createAsyncThunk(
+  'signIn',
+  async (body:any) => {
+ 
+      const response = await axios.post('http://localhost:3001/api/auth/login', body);
+      if (response.status === 200) {
+        localStorage.setItem('token',response.data.token)
+        console.log(response.data);
+        return response.data;
+     }
+     else if (response.status===404) {
+      console.log('error')
+     }
   }
-};
+  
+)
 const signInSlice = createSlice({
   name: 'signIn',
   initialState,
@@ -42,7 +46,7 @@ const signInSlice = createSlice({
       state.error = action.payload;
       state.success = false;
     },
-  },
+  }
 });
 
 export const { signInStart, signInSuccess, signInFailure } = signInSlice.actions;
