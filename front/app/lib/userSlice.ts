@@ -1,18 +1,19 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from './store'; // Assuming you have a store setup
 import  {User} from '../types/types'
+import { error } from 'console';
 // Define the interface for the user state
 interface UserState {
-  user: User | null;
-  loading: boolean;
-  error: string | null;
+  user: User | null,
+  loading:boolean,
+  error:string | null,
 }
 
 // Define the initial state
 const initialState: UserState = {
   user: null,
-  loading: false,
-  error: null,
+  loading:false,
+  error:'',
 };
 
 // Define your async thunk to fetch user data
@@ -25,7 +26,7 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
 
 // Create a slice
 const userSlice = createSlice({
-  name: 'user',
+  name: 'users',
   initialState,
   reducers: {
     // Other synchronous reducers can go here

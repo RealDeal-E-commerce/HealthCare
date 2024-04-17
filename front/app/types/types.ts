@@ -5,7 +5,7 @@ export interface User {
     username: string;
     email: string;
     password: string;
-    userType: UserType;
+    role: UserType;
     speciality: string;
     phoneNumber: string;
     imageUrl: string;
