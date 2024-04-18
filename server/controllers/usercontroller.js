@@ -1,8 +1,10 @@
-const { User } = require('../database-mysql/index');
+const { user } = require('../models/prisma');
+
+
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.findAll();
+    const users = await prisma.user.findMany();
     res.status(200).json(users);
   } catch (error) {
     console.error('Error fetching users:', error);
@@ -13,7 +15,7 @@ const getAllUsers = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findByPk(id);
+    const user = await prisma.user.findUnique({ where: { id: parseInt(id) } });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -22,20 +24,20 @@ const getUserById = async (req, res) => {
     console.error('Error fetching user:', error);
     res.status(500).json({ error: 'Failed to fetch user' });
   }
-}
+};
 
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { body } = req;
-    const [numberOfAffectedRows, affectedRows] = await User.update(body, {
-      where: { id },
-      returning: true,
+    const updatedUser = await prisma.user.update({
+      where: { id: parseInt(id) },
+      data: body,
     });
-    if (!numberOfAffectedRows) {
+    if (!updatedUser) {
       return res.status(404).json({ error: 'User not found or no changes made' });
     }
-    res.status(200).json(affectedRows[0]);
+    res.status(200).json(updatedUser);
   } catch (error) {
     console.error('Error updating user:', error);
     res.status(500).json({ error: 'Failed to update user' });
@@ -44,8 +46,10 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const { Email } = req.body;
-    const deletedUser = await User.destroy({ where: { Email } });
+    const { id } = req.params;
+    const deletedUser = await prisma.user.delete({
+      where: { id: parseInt(id) },
+    });
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -55,6 +59,7 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete user' });
   }
 };
+
 module.exports = {
   getAllUsers,
   updateUser,

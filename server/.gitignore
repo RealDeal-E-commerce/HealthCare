@@ -35,3 +35,6 @@ bower_components/
 .floo
 .flooignore
 .flooignore
+.env
+prisma/migrations
+package-lock.json

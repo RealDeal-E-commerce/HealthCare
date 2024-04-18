@@ -3,15 +3,15 @@ const { PrismaClient }=require('@prisma/client')
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.category.createMany({
-    data: [{ name: 'Computers' }, { name: 'TV' }, { name: 'Storage' }, { name: 'Accessories' }],
-    skipDuplicates: true,
-  });
+  // await prisma.category.createMany({
+  //   data: [{ name: 'Computers' }, { name: 'TV' }, { name: 'Storage' }, { name: 'Accessories' }],
+  //   skipDuplicates: true,
+  // });
 
-  await prisma.tag.createMany({
-    data: [{ name: 'Apple' }, { name: 'IOS' }, { name: 'SSD' }, { name: 'Keyboard' }, { name: 'USB' }],
-    skipDuplicates: true,
-  });
+  // await prisma.tag.createMany({
+  //   data: [{ name: 'Apple' }, { name: 'IOS' }, { name: 'SSD' }, { name: 'Keyboard' }, { name: 'USB' }],
+  //   skipDuplicates: true,
+  // });
 }
 
 main()
