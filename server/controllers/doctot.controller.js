@@ -36,7 +36,7 @@ const createDoctor = async (req, res) => {
         res.status(500).json({ error: 'Failed to create doctor' });
     }
 }
-const updateDoctor = async (req, res) => {
+const updateDoctor = async (req, res) => { 
     try {
         const { id } = req.params;
         const body = req.body;
