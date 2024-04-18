@@ -57,7 +57,7 @@ const Navbar: React.FC = () => {
         <Link className={styles.navLink} href="/SignIn">
           Sign Up
         </Link>
-        <Link href="/Login">
+        <Link href="/SignUp">
          <button className={styles.loginButton}>Log In</button>
         </Link>
         
