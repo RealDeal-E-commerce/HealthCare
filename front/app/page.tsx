@@ -6,6 +6,9 @@ import { useEffect,useRef } from "react";
 import Navbar from "./components/Navbar";
 import Home from './components/Home'
 import SignUp from './SignUp/page'
+import Profile from "./components/Profile/Profile";
+import Patient from "./components/Profile/Patient";
+import Today from "./components/Profile/Today";
 
 
 export default function home() {
@@ -22,8 +25,9 @@ useEffect(()=>{
 
   return (
     <main className="flex min-h-screen flex-col items-center ">
-       <Home/>
-
+       <Profile/>
+      <Today/>
+      <Patient/>
      
     </main>
   );
