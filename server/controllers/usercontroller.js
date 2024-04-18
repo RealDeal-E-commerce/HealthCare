@@ -28,14 +28,14 @@ const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { body } = req;
-    const [numberOfAffectedRows, affectedRows] = await User.update(body, {
-      where: { id },
-      returning: true,
+    const updatedUser = await prisma.user.update({
+      where: { id: parseInt(id) },
+      data: body,
     });
-    if (!numberOfAffectedRows) {
+    if (!updatedUser) {
       return res.status(404).json({ error: 'User not found or no changes made' });
     }
-    res.status(200).json(affectedRows[0]);
+    res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json({ error: 'SERVER ERROR' });
   }
@@ -43,8 +43,10 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const { Email } = req.body;
-    const deletedUser = await User.destroy({ where: { Email } });
+    const { id } = req.params;
+    const deletedUser = await prisma.user.delete({
+      where: { id: parseInt(id) },
+    });
     if (!deletedUser) {
       return res.status(404).json({ error: 'User not found' });
     }

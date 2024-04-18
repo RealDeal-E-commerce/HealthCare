@@ -11,7 +11,7 @@ export interface User {
     doctor?: Doctor;
     appointments?: Appointment[];
     ratingsComments?: RatingsComment[];
-    blogs?: Blog[];
+    // blogs?: Blog[];
 }
 
  export interface SignUpState {
@@ -94,16 +94,7 @@ export interface Message {
     paymentDate: Date;
 }
   
-  export interface Blog {
-    id: number;
-    title: string;
-    text: string;
-    imageUrl: string;
-    authorId: number;
-    author: User;
-    comments: Comment[];
-}
-
+  
   
   export interface Comment {
     id: number;
@@ -111,7 +102,7 @@ export interface Message {
     comment: string;
     timestamp: Date;
     blogId: number;
-    blog: Blog;
+    // blog: Blog;
   }
   
   export interface Product {
