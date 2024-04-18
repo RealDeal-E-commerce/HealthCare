@@ -1,14 +1,13 @@
-const { user } = require('../models/prisma');
+const prisma = require('../models/prisma');
 
 
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
+    const users = await prisma.user.findMany({});
     res.status(200).json(users);
   } catch (error) {
-    console.error('Error fetching users:', error);
-    res.status(500).json({ error: 'Failed to fetch users' });
+    res.status(500).json({ error: 'SERVER ERROR' });
   }
 };
 
@@ -21,8 +20,7 @@ const getUserById = async (req, res) => {
     }
     res.status(200).json(user);
   } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ error: 'Failed to fetch user' });
+    res.status(500).json({ error: 'SERVER ERROR' });
   }
 };
 
@@ -39,8 +37,7 @@ const updateUser = async (req, res) => {
     }
     res.status(200).json(updatedUser);
   } catch (error) {
-    console.error('Error updating user:', error);
-    res.status(500).json({ error: 'Failed to update user' });
+    res.status(500).json({ error: 'SERVER ERROR' });
   }
 };
 
@@ -55,8 +52,7 @@ const deleteUser = async (req, res) => {
     }
     res.status(200).json({ message: 'User deleted successfully' });
   } catch (error) {
-    console.error('Error deleting user:', error);
-    res.status(500).json({ error: 'Failed to delete user' });
+    res.status(500).json({ error: 'SERVER ERROR' });
   }
 };
 
