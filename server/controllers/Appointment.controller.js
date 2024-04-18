@@ -1,93 +1,61 @@
-const { Appointment } = require('../database-mysql/index');
 
-const getAllAppointment = async (req, res) => {
+const  prisma = require('../models/prisma');
+
+const createAppointment = async (req, res) => {
+    const { appointmentTime, status, paymentStatus, appointmentDepartment, doctorId, userId } = req.body;
     try {
-        const appointment = await Appointment.findAll();
+        const appointment = await prisma.appointment.create({
+            data: {
+              appointmentTime,
+              status,
+              paymentStatus,
+              appointmentDepartment,
+              doctor: {
+                connect: { id: doctorId } // Correctly reference doctor here
+            },
+            user: {
+                connect: { id: userId }
+            }
+    }})
         res.status(200).json(appointment);
     } catch (error) {
-        console.error('Error fetching Appointment:', error);
-        res.status(500).json({ error: 'Failed to fetch Appointment' });
+       console.log(error);
+        res.status(500).json({ error: 'SERVER ERROR' });
+    }
+}
+const getAllAppointment = async (req, res) => {
+    try {
+        const appointments = await prisma.appointment.findMany({
+            include: {
+                doctor: true,
+                user: true
+              }
+            })
+            res.status(200).json(appointments);
+        } catch (error) {
+       console.log(error);
+        res.status(500).json({ error: 'SERVER ERROR' });
     }
 }
 
 const getAppointmentById = async (req, res) => {
     try {
         const { id } = req.params;
-        const appointment = await Appointment.findOne({ where: { id } });
-        if (appointment) {
+        const appointment = await prisma.appointment.findUnique({
+            where: {id:parseInt(id)},
+            include: {
+                doctor: true,
+                user: true
+              }
+            })
             res.status(200).json(appointment);
-        } else {
-            res.status(404).json({ error: 'Appointment not found' });
-        }
-    } catch (error) {
-        console.error('Error fetching Appointment:', error);
-        res.status(500).json({ error: 'Failed to fetch Appointment' });
+        } catch (error) {
+       console.log(error);
+        res.status(500).json({ error: 'SERVER ERROR' });
     }
 }
-const getAllAppointmentOfdoctor = async (req, res) => {
-    try {
-        const { DoctorId } = req.params;
-        if (!DoctorId) {
-            return res.status(400).json({ error: 'DoctorId is required' });
-        }
-        const appointments = await Appointment.findAll({ where: { DoctorId } });
-        res.status(200).json(appointments);
-    } catch (error) {
-        console.error('Error fetching Appointments:', error);
-        res.status(500).json({ error: 'Failed to fetch Appointments' });
-    }
-}
-
-
-const createAppointment = async (req, res) => {
-    try {
-        const body = req.body;
-        const appointment = await Appointment.create(body);
-        res.status(201).json(appointment);
-    } catch (error) {
-        console.error('Error creating Appointment:', error);
-        res.status(500).json({ error: 'Failed to create Appointment' });
-    }
-}
-const updateAppointment = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const body = req.body;
-        const appointment = await Appointment.findOne({ where: { id } });
-        if (appointment) {
-            await Appointment.update(body);
-            res.status(200).json(appointment);
-        } else {
-            res.status(404).json({ error: 'Appointment not found' });
-        }
-    } catch (error) {
-        console.error('Error updating Appointment:', error);
-        res.status(500).json({ error: 'Failed to update Appointment' });
-    }
-}
-
-const deleteAppointment = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const appointment = await Appointment.findOne({ where: { id } });
-        if (appointment) {
-            await Appointment.destroy();
-            res.status(200).json({ message: 'Appointment deleted successfully' });
-        } else {
-            res.status(404).json({ error: 'Appointment not found' });
-        }
-    } catch (error) {
-        console.error('Error deleting Appointment:', error);
-        res.status(500).json({ error: 'Failed to delete Appointment' });
-    }
-}
-
 module.exports = {
+    createAppointment,   
     getAllAppointment,
-    createAppointment,
-    getAppointmentById,
-    updateAppointment,
-    deleteAppointment,
-    getAllAppointmentOfdoctor
-
+    getAppointmentById
 };
