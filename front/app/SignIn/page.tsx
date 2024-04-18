@@ -1,12 +1,10 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
-// import { useRouter } from 'next/router';
-// import { connect } from 'react-redux'; // Import connect
 import { signIn } from '../lib/SignInSlice';
 import Navbar from '../components/Navbar';
-import { useAppDispatch } from "../lib/hooks";
-import './pageS.css';
+import { useAppDispatch } from '../lib/hooks';
+import styles from '../styles/SignIn.module.css'; // Import styles from the CSS module
 
 interface SignInProps {
   login: (body: { email: string; password: string }) => void;
@@ -25,25 +23,25 @@ const SignIn: React.FC<SignInProps> = ({ login, error }) => {
       password,
     };
     dispatch(signIn(body));
-    console.log(email,'hhhhh');
+    console.log(email, 'hhhhh');
   };
 
   return (
     <div>
       <Navbar />
-      <div className='form-container'>
-        <form className='form' onSubmit={handleSubmit}>
-          <div className='container'>
-            <div className='image-container'>
+      <div className={styles.formContainer}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div className={styles.container}>
+            <div className={styles.imageContainer}>
               <img
                 src='https://media.istockphoto.com/id/1319031310/photo/doctor-writing-a-medical-prescription.jpg?s=612x612&w=0&k=20&c=DWZGM8lBb5Bun7cbxhKT1ruVxRC_itvFzA9jxgoA0N8='
                 alt='Doctor'
-                className='image'
+                className={styles.image}
               />
             </div>
-            <div className='input-container'>
+            <div className={styles.inputContainer}>
               <input
-                className='input'
+                className={styles.input}
                 type='email'
                 placeholder='Email'
                 value={email}
@@ -51,7 +49,7 @@ const SignIn: React.FC<SignInProps> = ({ login, error }) => {
                 required
               />
               <input
-                className='input'
+                className={styles.input}
                 type='password'
                 placeholder='Password'
                 value={password}
@@ -60,7 +58,7 @@ const SignIn: React.FC<SignInProps> = ({ login, error }) => {
               />
             </div>
           </div>
-          <button className='submit-button' type='submit'>
+          <button className={styles.submitButton} type='submit'>
             Sign In
           </button>
         </form>

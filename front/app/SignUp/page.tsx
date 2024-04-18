@@ -4,7 +4,7 @@ import React, { useState, ChangeEvent } from "react";
 import { useAppDispatch } from "../lib/hooks";
 import { signup } from '../lib/SignUpSlice';
 import Navbar from '../components/Navbar';
-import './page.css';
+import styles from '../styles/SignUp.module.css'; 
 
 interface SignupProps {}
 
@@ -75,16 +75,15 @@ const Signup: React.FC<SignupProps> = () => {
   return (
     <div>
       <Navbar />
-      <div className="signup-container">
-      <img
-              src="https://st2.depositphotos.com/1044737/9651/i/950/depositphotos_96519888-stock-photo-doctors-medical-appointment-doctor-nurse.jpg"
-              alt="Your Image"
-              className="signup-image"
-            />
-            
-        <div className="form doctor-form">
+      <div className={styles.signupContainer}>
+        <img
+          src="https://st2.depositphotos.com/1044737/9651/i/950/depositphotos_96519888-stock-photo-doctors-medical-appointment-doctor-nurse.jpg"
+          alt="Your Image"
+          className={styles.signupImage}
+        />
+        
+        <div className={`${styles.form} ${styles.doctorForm}`}>
           <form onSubmit={handleSubmit}>
-         
             <input
               type="text"
               placeholder="FirstName"
@@ -92,7 +91,7 @@ const Signup: React.FC<SignupProps> = () => {
               value={firstName}
               onChange={handleChange}
               required
-              className="form-input"
+              className={styles.formInput}
             />
             <input
               type="text"
@@ -101,7 +100,7 @@ const Signup: React.FC<SignupProps> = () => {
               value={lastName}
               onChange={handleChange}
               required
-              className="form-input"
+              className={styles.formInput}
             />
             <input
               type="email"
@@ -110,7 +109,7 @@ const Signup: React.FC<SignupProps> = () => {
               value={email}
               onChange={handleChange}
               required
-              className="form-input"
+              className={styles.formInput}
             />
             <input
               type="text"
@@ -119,7 +118,7 @@ const Signup: React.FC<SignupProps> = () => {
               value={phoneNumber}
               onChange={handleChange}
               required
-              className="form-input"
+              className={styles.formInput}
             />
             <input
               type="password"
@@ -128,14 +127,14 @@ const Signup: React.FC<SignupProps> = () => {
               value={password}
               onChange={handleChange}
               required
-              className="form-input"
+              className={styles.formInput}
             />
             <select
               name="role"
               value={role}
               onChange={handleChange}
               required
-              className="form-input"
+              className={styles.formInput}
             >
               <option value="">Select Role</option>
               <option value="Doctor">Doctor</option>
@@ -149,7 +148,7 @@ const Signup: React.FC<SignupProps> = () => {
                 value={speciality}
                 onChange={handleChange}
                 required
-                className="form-input"
+                className={styles.formInput}
               />
             )}
             <input
@@ -159,14 +158,14 @@ const Signup: React.FC<SignupProps> = () => {
               value={image}
               onChange={handleChange}
               required
-              className="form-input"
+              className={styles.formInput}
             />
-            <button type="submit" className="submit-button" onClick={handleSignUpClick}>
+            <button type="submit" className={styles.submitButton} onClick={handleSignUpClick}>
               Sign Up
             </button>
             <button
               type="button"
-              className="signin-link"
+              className={styles.signInLink}
               onClick={() => {
                 window.location.href = "/SignIn";
               }}
