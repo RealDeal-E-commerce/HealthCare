@@ -2,6 +2,7 @@ import { configureStore,ThunkAction, Action } from '@reduxjs/toolkit'
 import  userReducer from './userSlice'
 import signUpReducer from './SignUpSlice';
 import signInReducer from './SignInSlice';
+import SpecialtySlice from './SpecialtySlice';
 
 
 export const makeStore = () => {
@@ -10,6 +11,7 @@ export const makeStore = () => {
         user:userReducer,
         signUp: signUpReducer,
         signIn: signInReducer,
+        SpecialtySlice : SpecialtySlice
 
     },
     

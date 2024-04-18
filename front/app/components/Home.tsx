@@ -32,7 +32,7 @@ function Home() {
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  const paginate = (pageNumber:number)=> setCurrentPage(pageNumber);
 
   return (
     <div className='body'>

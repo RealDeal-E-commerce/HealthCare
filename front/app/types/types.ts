@@ -1,18 +1,19 @@
 export interface User {
-    id: number;
+    id?: number;
     firstName: string;
     lastName: string;
-    username: string;
     email: string;
     password: string;
-    userType: UserType;
     speciality: string;
     phoneNumber: string;
     imageUrl: string;
-    appointments: Appointment[];
-    ratingsComments: RatingsComment[];
-    blogs: Blog[];
+    doctorId?:number
+    doctor?: Doctor;
+    appointments?: Appointment[];
+    ratingsComments?: RatingsComment[];
+    blogs?: Blog[];
 }
+
  export interface SignUpState {
   loading: boolean;
   error: string | null;
@@ -23,6 +24,13 @@ export interface User {
   error: string | null;
   success: boolean;
 }
+
+export interface CurrentUserState {
+  loading: boolean;
+  error: string | null;
+  user: User | null;
+}
+
 
 
 
@@ -54,15 +62,8 @@ export enum UserType {
   
   export interface Doctor {
     id: number;
-    firstName: string;
-    lastName: string;
-    username: string;
-    email: string;
-    password: string;
-    phoneNumber: string;
-    imageUrl: string;
-    speciality: string;
-    appointments: Appointment[];
+    specialityId: number;
+
 }
   
 export interface Message {
@@ -126,4 +127,10 @@ export interface Message {
     itemsPerPage: number;
     totalItems: number;
     paginate: (pageNumber: number) => void;
+  }
+
+  export interface CurentSpeciality {
+    specialty: []
+    status: string;
+    error: string | null;  
   }

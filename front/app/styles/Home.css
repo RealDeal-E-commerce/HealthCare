@@ -212,7 +212,7 @@ margin-left: 50px;
 
   .doctor-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Increase the minimum size of the cards */
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); /* Increase the minimum size of the cards */
     gap: 20px; /* Adjust the gap as needed */
     padding: 20px; /* Ensure there's padding around the grid */
     justify-content: center;
@@ -228,7 +228,7 @@ margin-left: 50px;
     align-items: center;
     justify-content: center;
     width: 300px; /* Increased width */
-    min-height: 400px; /* Increased height */
+    min-height: 390px; /* Increased height */
     padding: 20px;
     text-align: center;
   }

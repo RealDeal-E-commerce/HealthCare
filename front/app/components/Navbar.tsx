@@ -54,10 +54,10 @@ const Navbar: React.FC = () => {
         <Link className={styles.navLink} href="/doctorlist">
           Doctors
         </Link>
-        <Link className={styles.navLink} href="/sign up page">
+        <Link className={styles.navLink} href="/SignIn">
           Sign Up
         </Link>
-        <Link href="/login">
+        <Link href="/Login">
          <button className={styles.loginButton}>Log In</button>
         </Link>
         

@@ -1,7 +1,10 @@
+
+'use client'
+
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { useAppDispatch } from './hooks'; // Assuming you've exported useAppDispatch and useAppSelector from the provided hooks file
 import axios from 'axios'
-import {SignUpState} from '../types/types';
+import {SignUpState,User} from '../types/types';
 
 
 
@@ -13,7 +16,7 @@ const initialState: SignUpState = {
 
 export const signup = createAsyncThunk(
   'signup/signup',
-  async (userData) => {
+  async (userData:User) => {
  
       const response = await axios.post('http://localhost:3001/api/auth/register', userData);
 

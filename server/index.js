@@ -18,6 +18,7 @@ const cloudinary = require('cloudinary');
 const BlogRouter = require('./routes/Blog.routes');
 const ProductRouter = require('./routes/product.router');
 const CommentRouter = require('./routes/blogComments.router');
+const SpecialityRouter=require('./routes/Speciality.router')
 const fileUpload = require('express-fileupload');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -91,6 +92,7 @@ app.use("/api/users", userRouter);
 app.use('/api/blogs', BlogRouter);
 app.use('/api/comments', CommentRouter);
 app.use('/api/products', ProductRouter);
+app.use('/api/speciality', SpecialityRouter);
 app.post('/api/upload', async (req, res) => {
   try {
     const fileStr = req.files.file.data.toString('base64'); 
