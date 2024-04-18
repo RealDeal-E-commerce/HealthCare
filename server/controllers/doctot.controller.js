@@ -36,14 +36,14 @@ const createDoctor = async (req, res) => {
         res.status(500).json({ error: 'Failed to create doctor' });
     }
 }
-const updateDoctor = async (req, res) => {
+const updateDoctor = async (req, res) => { 
     try {
         const { id } = req.params;
         const body = req.body;
         const doctor = await Doctor.findOne({ where: { id } });
         if (doctor) {
-            await doctor.update(body);
-            res.status(200).json(doctor);
+            await doctor.update(body)
+            res.status(200).json(doctor)
         } else {
             res.status(404).json({ error: 'Doctor not found' });
         }
