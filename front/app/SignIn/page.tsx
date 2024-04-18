@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { signIn } from '../lib/SignInSlice';
 import Navbar from '../components/Navbar';
 import { useAppDispatch } from '../lib/hooks';
-import styles from '../styles/SignIn.module.css';
+import styles from '../styles/SignIn.module.css'; // Import styles from the CSS module
 
 interface SignInProps {
   login: (body: { email: string; password: string }) => void;

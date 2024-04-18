@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch, useAppStore } from './lib/hooks'
 import { useEffect,useRef } from "react";
 import Navbar from "./components/Navbar";
 import Home from './components/Home'
-import SignUp from './Login/page'
+import SignUp from './SignUp/page'
 
 
 export default function home() {
