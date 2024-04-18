@@ -5,14 +5,12 @@ import { FaRegCalendarAlt } from "react-icons/fa";
 import { SiConsul } from "react-icons/si";
 import { IoIosVideocam } from "react-icons/io";
 
-
-
 import './Prof.css';
 
 const AppointmentTable = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
-    const data = [
+ const data = [
         {
             name: 'Bogdan Kriv',
             gender: 'Male',
@@ -79,90 +77,100 @@ const AppointmentTable = () => {
     ];
 
     return (
-        <div className="containerr">
-            <div className="welcome-message">
-                <p className="welcome-text">Welcome, Dr. Stephen</p>
-                <p className="have-a-nice-day">Have a nice day at great work</p>
+        <div>
+            <div className="bar-side-component">
+                <ul>
+                <li className="button-like">Overview</li>
+          <li className="button-like">Appointment</li>
+          <li className="button-like">My Patients</li>
+          <li className="button-like">Schedule Timings</li>
+          <li className="button-like">Payments</li>
+          <li className="button-like">Message</li>
+          <li className="button-like">Blog</li>
+          <li className="button-like">Settings</li>
+                </ul>
             </div>
-            <div className="patient-info-container">
-      <div className="patient-info-content">
-      <CgProfile />
-        <p className="patient-info-text">24.4k</p>
-        <p className="patient-info-label">Total Patients</p>
-      </div>
-    </div>
-    <div>
-    <div className="patient-appointments-container">
-    <div className="patient-info-content-appointments">
-    <FaRegCalendarAlt />
-<p className="patient-info-text-appointments">166.3k</p>
-<p className="patient-info-label-appointments">Appointments</p>
-</div>
-    </div>
-    </div>
-
-    <div>
-    <div className="patient-clinic-container">
-    <div className="patient-info-content-clinic">
-    <SiConsul />
-<p className="patient-info-text-clinic">53.5k</p>
-<p className="patient-info-label-clinic">Clinic Consulting</p>
-</div>
-</div>
-
-    </div>
-    <div>
-    <div className="patient-video-container">
-    <div className="patient-info-content-video">
-    <IoIosVideocam />
-<p className="patient-info-text-video">28.0k</p>
-<p className="patient-info-label-video">Video Consulting</p>
-</div>
-</div>
-
-    </div>
-    
-            <div className="container">
-                <div className="appointment-request">
-                    <h1>Appointment Request</h1>
-                    <table className="appointment-table">
-                        <thead>
-                            <tr>
-                                <th className="table-header table-name">Name</th>
-                                <th className="table-header table-gender">Gender</th>
-                                <th className="table-header table-age">Age</th>
-                                <th className="table-header table-date">Date</th>
-                                <th className="table-header table-time">Time</th>
-                                <th className="table-header table-status">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {data.map((row, index) => (
-                                <tr key={index} className="table-row">
-                                    <td className="table-data">
-                                        <img src={row.image} alt={row.name} className="appointment-image" />
-                                        <br />
-                                        <span>{row.name}</span>
-                                    </td>
-                                    <td className="table-data">{row.gender}</td>
-                                    <td className="table-data">{row.age}</td>
-                                    <td className="table-data">{row.date}</td>
-                                    <td className="table-data">{row.time}</td>
-                                    <td className="table-data">
-                                        <button className={`status-button ${row.status.toLowerCase()}`}>
-                                            {row.status}
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+            <div className="containerr">
+                <div className="welcome-message">
+                    <p className="welcome-text">Welcome, Dr. Stephen</p>
+                    <p className="have-a-nice-day">Have a nice day at great work</p>
                 </div>
-                <div className="calendar-container">
-                    <Calendar
-                        onChange={setSelectedDate}
-                        value={selectedDate}
-                    />
+                <div className="patient-info-container">
+                    <div className="patient-info-content">
+                        <CgProfile />
+                        <p className="patient-info-text">24.4k</p>
+                        <p className="patient-info-label">Total Patients</p>
+                    </div>
+                </div>
+                <div>
+                    <div className="patient-appointments-container">
+                        <div className="patient-info-content-appointments">
+                            <FaRegCalendarAlt />
+                            <p className="patient-info-text-appointments">166.3k</p>
+                            <p className="patient-info-label-appointments">Appointments</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className="patient-clinic-container">
+                        <div className="patient-info-content-clinic">
+                            <SiConsul />
+                            <p className="patient-info-text-clinic">53.5k</p>
+                            <p className="patient-info-label-clinic">Clinic Consulting</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className="patient-video-container">
+                        <div className="patient-info-content-video">
+                            <IoIosVideocam />
+                            <p className="patient-info-text-video">28.0k</p>
+                            <p className="patient-info-label-video">Video Consulting</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="container">
+                    <div className="appointment-request">
+                        <h1>Appointment Request</h1>
+                        <table className="appointment-table">
+                            <thead>
+                                <tr>
+                                    <th className="table-header table-name">Name</th>
+                                    <th className="table-header table-gender">Gender</th>
+                                    <th className="table-header table-age">Age</th>
+                                    <th className="table-header table-date">Date</th>
+                                    <th className="table-header table-time">Time</th>
+                                    <th className="table-header table-status">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {data.map((row, index) => (
+                                    <tr key={index} className="table-row">
+                                        <td className="table-data">
+                                            <img src={row.image} alt={row.name} className="appointment-image" />
+                                            <br />
+                                            <span>{row.name}</span>
+                                        </td>
+                                        <td className="table-data">{row.gender}</td>
+                                        <td className="table-data">{row.age}</td>
+                                        <td className="table-data">{row.date}</td>
+                                        <td className="table-data">{row.time}</td>
+                                        <td className="table-data">
+                                            <button className={`status-button ${row.status.toLowerCase()}`}>
+                                                {row.status}
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="calendar-container">
+                        <Calendar
+                            onChange={setSelectedDate}
+                            value={selectedDate}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
