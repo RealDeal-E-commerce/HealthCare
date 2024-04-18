@@ -1,7 +1,7 @@
 'use client'
 
 import { useAppSelector, useAppDispatch, useAppStore } from './lib/hooks'
-import { fetchUser } from "./lib/userSlice";
+
 import { useEffect,useRef } from "react";
 import Navbar from "./components/Navbar";
 import Home from './components/Home'
@@ -11,12 +11,12 @@ import SignUp from './Login/page'
 export default function home() {
    // Initialize the store with the product information
 
-  const user = useAppSelector(state => state.user.user)
-console.log(user);
+  // const user = useAppSelector(state => state.user.user)
+// console.log(user);
 
   const dispatch = useAppDispatch()
 useEffect(()=>{
-   dispatch(fetchUser())
+  //  dispatch(fetchUser())
 },[])
 
 
@@ -28,3 +28,7 @@ useEffect(()=>{
     </main>
   );
 }
+function fetchUser(): any {
+  throw new Error('Function not implemented.');
+}
+

@@ -11,7 +11,6 @@ export interface User {
     doctor?: Doctor;
     appointments?: Appointment[];
     ratingsComments?: RatingsComment[];
-    blogs?: Blog[];
 }
 
  export interface SignUpState {
