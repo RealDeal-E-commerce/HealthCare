@@ -1,26 +1,23 @@
 import { configureStore,ThunkAction, Action } from '@reduxjs/toolkit'
-import  userReducer from './userSlice'
 import signUpReducer from './SignUpSlice';
 import signInReducer from './SignInSlice';
 import SpecialtySlice from './SpecialtySlice';
 
+import CurrentUserReducer from './CurrentUserSlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-        user:userReducer,
+      currentUser:CurrentUserReducer ,
         signUp: signUpReducer,
         signIn: signInReducer,
         SpecialtySlice : SpecialtySlice
 
     },
-    
   })
 }
 
-// Infer the type of makeStore
 export type AppStore = ReturnType<typeof makeStore>
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<AppStore['getState']>
 export type AppDispatch = AppStore['dispatch']
 export type AppThunk<ReturnType = void> = ThunkAction<

@@ -7,7 +7,7 @@ import styles from '../styles/Navbar.module.css'
 
 const Navbar: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isLoggedIn = useAppSelector((state) => state.user.user);
+  const isLoggedIn = useAppSelector((state) => state.currentUser.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleLogout = () => {
