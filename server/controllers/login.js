@@ -7,7 +7,11 @@ const  prisma = require('../models/prisma');
 
 const register = async (req, res) => {
   try {
+<<<<<<< HEAD
+    const { email, password, phoneNumber, firstName, lastName, specialityId, imageUrl,role } = req.body;
+=======
     const {email, password, phoneNumber, firstName, lastName, specialityId, imageUrl,role } = req.body;
+>>>>>>> e56d6e48fc00f3f608c59ac49d3063a08dfd97dd
     if (role==='doctor'){
 
       if (!password) {
@@ -16,10 +20,13 @@ const register = async (req, res) => {
   
       const hashedPassword = await bcrypt.hash(password, 10);
       const doctor = await prisma.doctor.create({
-        data: {  specialityId},
       });
       const user = await prisma.user.create({
+<<<<<<< HEAD
+        data: {doctorId:doctor.id,  email, password: hashedPassword, phoneNumber, firstName, lastName, imageUrl,role:"doctor" ,specialityId},
+=======
         data: {doctorId:doctor.id,email, password: hashedPassword, phoneNumber, firstName, lastName, imageUrl,role:"doctor" },
+>>>>>>> e56d6e48fc00f3f608c59ac49d3063a08dfd97dd
       });
 
     return  res.status(201).json(user );

@@ -33,6 +33,7 @@ export interface CurrentUserState {
 
 
 
+
 export enum UserType {
   Patient = 'Patient',
   Doctor = 'Doctor',
@@ -113,4 +114,14 @@ export interface Message {
   }
   
   
-  
+  export interface PaginationProps {
+    itemsPerPage: number;
+    totalItems: number;
+    paginate: (pageNumber: number) => void;
+  }
+
+  export interface CurentSpeciality {
+    specialty: []
+    status: string;
+    error: string | null;  
+  }
