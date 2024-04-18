@@ -1,3 +1,4 @@
+// authController.js
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
@@ -6,7 +7,7 @@ const  prisma = require('../models/prisma');
 
 const register = async (req, res) => {
   try {
-    const { email, password, phoneNumber, firstName, lastName, specialityId, imageUrl,role } = req.body;
+    const {email, password, phoneNumber, firstName, lastName, specialityId, imageUrl,role } = req.body;
     if (role==='doctor'){
 
       if (!password) {
@@ -28,7 +29,7 @@ const register = async (req, res) => {
       }
       const hashedPassword = await bcrypt.hash(password, 10);
       const user = await prisma.user.create({
-        data: {email, password: hashedPassword, phoneNumber, firstName, lastName, imageUrl },
+        data: { email, password: hashedPassword, phoneNumber, firstName, lastName, imageUrl },
       });
 
     return  res.status(201).json( user );

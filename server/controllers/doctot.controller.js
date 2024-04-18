@@ -42,8 +42,8 @@ const updateDoctor = async (req, res) => {
         const body = req.body;
         const doctor = await Doctor.findOne({ where: { id } });
         if (doctor) {
-            await doctor.update(body);
-            res.status(200).json(doctor);
+            await doctor.update(body)
+            res.status(200).json(doctor)
         } else {
             res.status(404).json({ error: 'Doctor not found' });
         }
