@@ -1,5 +1,3 @@
-// authController.js
-
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const  prisma = require('../models/prisma');
@@ -7,11 +5,7 @@ const  prisma = require('../models/prisma');
 
 const register = async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { email, password, phoneNumber, firstName, lastName, specialityId, imageUrl,role } = req.body;
-=======
     const {email, password, phoneNumber, firstName, lastName, specialityId, imageUrl,role } = req.body;
->>>>>>> e56d6e48fc00f3f608c59ac49d3063a08dfd97dd
     if (role==='doctor'){
 
       if (!password) {
@@ -19,14 +13,9 @@ const register = async (req, res) => {
       }
   
       const hashedPassword = await bcrypt.hash(password, 10);
-      const doctor = await prisma.doctor.create({
-      });
+      const doctor = await prisma.doctor.create({});
       const user = await prisma.user.create({
-<<<<<<< HEAD
-        data: {doctorId:doctor.id,  email, password: hashedPassword, phoneNumber, firstName, lastName, imageUrl,role:"doctor" ,specialityId},
-=======
-        data: {doctorId:doctor.id,email, password: hashedPassword, phoneNumber, firstName, lastName, imageUrl,role:"doctor" },
->>>>>>> e56d6e48fc00f3f608c59ac49d3063a08dfd97dd
+        data: {doctorId:doctor.id,email, password: hashedPassword, phoneNumber, firstName, specialityId,lastName, imageUrl,role:"doctor" },
       });
 
     return  res.status(201).json(user );
@@ -43,7 +32,7 @@ const register = async (req, res) => {
       }
     }
     
-  catch (error) {
+    catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Registration failed' });
   }
@@ -76,16 +65,15 @@ const login = async (req, res) => {
 
 
 const getUser = async (req,res)=>{
-  // Access user information from request object
   try {
     const currentUser = req.user;
-    const user =await prisma.user.findUnique( {where: {
+    const user =await prisma.user.findUnique( {where:{
       id: currentUser.userId},
       include: {
-        doctor: true, // Include the posts related to the user
+        doctor: true,
       },
     },)
-      // Do something with currentUser
+    
       res.json(user||null)
   } catch (error) {
     console.error(error);
@@ -93,11 +81,6 @@ const getUser = async (req,res)=>{
   }
 
 }
-
-
-
-
-
 
 module.exports = {
   register,

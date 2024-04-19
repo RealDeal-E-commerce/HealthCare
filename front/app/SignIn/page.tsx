@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { signIn } from '../lib/SignInSlice';
 import Navbar from '../components/Navbar';
 import { useAppDispatch } from '../lib/hooks';
-import styles from '../styles/SignIn.module.css'; // Import styles from the CSS module
+import styles from '../styles/SignIn.module.css';
+
 
 interface SignInProps {
   login: (body: { email: string; password: string }) => void;
@@ -14,6 +15,7 @@ interface SignInProps {
 const SignIn: React.FC<SignInProps> = ({ login, error }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loged,setLoged]=useState(false)
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,8 +25,11 @@ const SignIn: React.FC<SignInProps> = ({ login, error }) => {
       password,
     };
     dispatch(signIn(body));
+    setLoged(true)
     console.log(email, 'hhhhh');
   };
+  
+
 
   return (
     <div>
@@ -58,9 +63,11 @@ const SignIn: React.FC<SignInProps> = ({ login, error }) => {
               />
             </div>
           </div>
+          {
           <button className={styles.submitButton} type='submit'>
             Sign In
           </button>
+          }
         </form>
       </div>
     </div>

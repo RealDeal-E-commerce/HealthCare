@@ -14,7 +14,10 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import {PaginationProps} from '../types/types'
 import { useAppSelector, useAppDispatch, useAppStore } from '../lib/hooks'
+
 function Home() {
+  // fetchCurrentUser
+
   
   const data = Array.from({ length: 9 }, (_, i) => ({
     id: i,
@@ -25,13 +28,9 @@ function Home() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
-
-  
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
-
-  
   const paginate = (pageNumber:number)=> setCurrentPage(pageNumber);
 
   return (

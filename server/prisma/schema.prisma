@@ -29,11 +29,10 @@ model User {
   ratingsComments RatingsComment[]
   role  Role @default(user)
   blogs       Blog[]
-  doctor      Doctor  @relation(fields: [doctorId], references: [id])
-  doctorId    Int        @unique
-  specialityId   Int   
-
-  speciality Speciality @relation(fields: [specialityId], references: [id])
+  doctor      Doctor?  @relation(fields: [doctorId], references: [id])
+  doctorId    Int?     @unique
+  specialityId   Int? @unique
+  speciality Speciality? @relation(fields: [specialityId], references: [id])
 }
 model Speciality {
   id          Int      @id @default(autoincrement())

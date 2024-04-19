@@ -5,20 +5,30 @@ import { useAppDispatch } from "../lib/hooks";
 import { signup } from '../lib/SignUpSlice';
 import Navbar from '../components/Navbar';
 import styles from '../styles/SignUp.module.css'; 
+import { fetchCurrentUser } from '../lib/CurrentUserSlice';
+import { type } from "os";
 
 interface SignupProps {}
 
 const Signup: React.FC<SignupProps> = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [role, setRole] = useState<string>("user");
-  const [speciality, setSpecialization] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  const [speciality, setSpecialization] = useState<string>("patient");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [image, setImage] = useState<string>('');
   const dispatch = useAppDispatch();
-  
+  const [go,setGo]=useState(false)
+  const handleSignUpClick = () => {
+    console.log(go,'hhhhhh');
+    
+    if(go){
+    window.location.href = "/SignIn";
+    
+    }
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
@@ -32,13 +42,12 @@ const Signup: React.FC<SignupProps> = () => {
       imageUrl: image,
       speciality,
     };
+    dispatch(signup(body) )
+    setGo(true)
     
-    dispatch(signup(body));
+
   };
   
-  const handleSignUpClick = () => {
-    window.location.href = "/SignIn";
-  };
   
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -83,7 +92,9 @@ const Signup: React.FC<SignupProps> = () => {
         />
         
         <div className={`${styles.form} ${styles.doctorForm}`}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={()=>{handleSubmit 
+              handleSignUpClick}
+            }>
             <input
               type="text"
               placeholder="FirstName"
@@ -160,7 +171,10 @@ const Signup: React.FC<SignupProps> = () => {
               required
               className={styles.formInput}
             />
-            <button type="submit" className={styles.submitButton} onClick={handleSignUpClick}>
+            <button type="submit" className={styles.submitButton}
+             onSubmit={()=>{
+              handleSubmit 
+              setGo(false)} }>
               Sign Up
             </button>
             <button

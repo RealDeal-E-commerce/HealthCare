@@ -1,27 +1,161 @@
-.profile {
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin: 20px;
-    text-align: center;
-  }
-  
-  .loading, .error {
-    font-size: 1.5rem;
-    color: #d33;
-  }
-  
-  .editButton {
-    background-color: rgb(0, 132, 68);
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .rates, .trust {
-    margin-top: 10px;
-    font-size: 1.25rem;
-  }
+.profileContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px;
+  background-color: #f9f9f9;
+  border-radius: 24px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.profileHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.profileHeader h1 {
+  font-size: 36px;
+  color: #333;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.editButton {
+  padding: 16px 32px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.editButton:hover {
+  background-color: #388e3c;
+}
+
+.profileContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.appointments {
+  flex: 1;
+  padding-right: 60px;
+}
+
+.appointments h2 {
+  font-size: 28px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 32px;
+}
+
+.appointmentList {
+  list-style: none;
+  padding: 0;
+}
+
+.appointmentList li {
+  border-bottom: 1px solid #ddd;
+  padding: 24px 0;
+  font-size: 20px;
+  color: #555;
+}
+
+.profileInfo {
+  flex: 1;
+}
+
+.avatarContainer {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.avatarContainer img {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 10px solid #fff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+.userInfo {
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.userInfo p {
+  margin: 0 0 24px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.editForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.editForm input {
+  margin-bottom: 24px;
+  padding: 14px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+.editForm button {
+  padding: 16px 32px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.editForm button:hover {
+  background-color: #388e3c;
+}
+
+.loading {
+  text-align: center;
+  font-size: 28px;
+  color: #333;
+  margin-top: 60px;
+}
+
+.error {
+  text-align: center;
+  font-size: 28px;
+  color: #f44336;
+  margin-top: 60px;
+}
+
+.error button {
+  margin-top: 32px;
+  padding: 16px 32px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.error button:hover {
+  background-color: #d32f2f;
+}

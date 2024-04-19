@@ -1,17 +1,16 @@
 export interface User {
-    id?: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-    speciality: string;
-    phoneNumber: string;
-    imageUrl: string;
-    doctorId?:number
-    doctor?: Doctor;
-    appointments?: Appointment[];
-    ratingsComments?: RatingsComment[];
-    // blogs?: Blog[];
+  id?: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  speciality?: string; // Consider whether this should be optional or related to Doctor
+  phoneNumber: string;
+  imageUrl: string;
+  doctorId?: number;
+  doctor?: Doctor; // Represents the one-to-one relationship with Doctor
+  appointments?: Appointment[];
+  ratingsComments?: RatingsComment[];
 }
 
  export interface SignUpState {
@@ -35,8 +34,8 @@ export interface CurrentUserState {
 
 
 export enum UserType {
-  Patient = 'Patient',
-  Doctor = 'Doctor',
+  Patient = 'patient',
+  Doctor = 'doctor',
 }
   
   export interface Appointment {

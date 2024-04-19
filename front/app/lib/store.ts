@@ -8,7 +8,7 @@ import CurrentUserReducer from './CurrentUserSlice';
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      currentUser:CurrentUserReducer ,
+       currentUser:CurrentUserReducer ,
         signUp: signUpReducer,
         signIn: signInReducer,
         SpecialtySlice : SpecialtySlice
