@@ -1,3 +1,9 @@
+
+
+/////////////////////////////////////////////////////////////////////////
+
+
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -18,7 +24,7 @@ enum Role {
 
 }
 model User {
-  id          Int   @unique     @id @default(autoincrement())
+    id          Int   @unique     @id @default(autoincrement())
   firstName   String
   lastName    String
   email       String      @unique
@@ -29,11 +35,13 @@ model User {
   ratingsComments RatingsComment[]
   role  Role @default(user)
   blogs       Blog[]
-  doctor      Doctor  @relation(fields: [doctorId], references: [id])
-  doctorId    Int        @unique
-  specialityId   Int   
+  doctor      Doctor?  @relation(fields: [doctorId], references: [id])
+  doctorId    Int?     @unique
+  specialityId   Int? @unique
+  speciality Speciality? @relation(fields: [specialityId], references: [id])
 
-  speciality Speciality @relation(fields: [specialityId], references: [id])
+  rooms       RoomUser[]
+  messages    Message[]
 }
 model Speciality {
   id          Int      @id @default(autoincrement())
@@ -49,10 +57,28 @@ model Doctor {
 }
 
 model Message {
-  id      Int    @id @default(autoincrement())
-  content String
+  id          Int   @unique     @id @default(autoincrement())
+  roomId      Int 
+  content     String    
+  room        Room   @relation(fields: [roomId], references: [id])
+  userId      Int    
+  user        User    @relation(fields: [userId], references: [id])
 }
 
+model Room {
+  id          Int   @unique     @id @default(autoincrement())
+  messages    Message[]
+  users RoomUser[]
+}
+model RoomUser {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int // relation scalar field (used in the `@relation` attribute above)
+  room   Room @relation(fields: [roomId], references: [id])
+  roomId Int // relation scalar field (used in the `@relation` attribute above)
+
+
+  @@id([userId, roomId])
+}
 model Appointment {
   id                  Int       @id @default(autoincrement())
   appointmentTime     DateTime
@@ -130,3 +156,25 @@ enum PaymentStatus {
   paid
   unpaid
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////
+
+
+
+
+
+
+

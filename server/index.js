@@ -8,8 +8,7 @@ const db = require('./database-mysql');
 const doctorRouter = require('./routes/doctor.router');
 const AppointmentRouter = require('./routes/Appointment.router');
 const RatingCommentsRouter = require('./routes/ratingComments.router');
-const messagesRouter = require('./routes/messages.router')
-const payment =require ('./controllers/Payment')
+const roomRouter = require('./routes/roomRouter')
 
 const userRouter = require('./routes/userrouters');
 const Authentication = require('./routes/loginrouters');
@@ -32,7 +31,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"]
   }
 });
-const PORT = 3001
+const PORT = 3002
 cloudinary.v2.config({
   cloud_name: 'duekcetwe',
   api_key: '313496654712626',
@@ -40,13 +39,10 @@ cloudinary.v2.config({
   secure: true,
 });
 app.use(cors())
-app.use(fileUpload());
 app.use(express.json());
+app.use(fileUpload());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/../client/dist"));
-app.use(cors())
-app.use('/api/messages', messagesRouter);
-// app.use('/api/payment', payment);
 
 app.post('/api/add', async (req, res) => {
   const url = "https://developers.flouci.com/api/generate_payment";
@@ -84,6 +80,7 @@ app.get('/api/verify/:id', async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+/////////////////////////////////////////
 app.use("/api/auth", Authentication);
 app.use('/api/doctors', doctorRouter);
 app.use("/api/Appointment", AppointmentRouter);
@@ -93,6 +90,7 @@ app.use('/api/blogs', BlogRouter);
 app.use('/api/comments', CommentRouter);
 app.use('/api/products', ProductRouter);
 app.use('/api/speciality', SpecialityRouter);
+app.use('/api/chat',roomRouter)
 app.post('/api/upload', async (req, res) => {
   try {
     const fileStr = req.files.file.data.toString('base64'); 
