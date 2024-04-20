@@ -74,7 +74,7 @@ model RoomUser {
   user       User     @relation(fields: [userId], references: [id])
   userId     Int // relation scalar field (used in the `@relation` attribute above)
   room   Room @relation(fields: [roomId], references: [id])
-  roomId Int // relation scalar field (used in the `@relation` attribute above)
+  roomId Int 
 
 
   @@id([userId, roomId])

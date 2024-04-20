@@ -9,6 +9,7 @@ const initialState: SignInState = {
   loading: false,
   error: null,
   success: false,
+  
 };
 
 export const signIn = createAsyncThunk(

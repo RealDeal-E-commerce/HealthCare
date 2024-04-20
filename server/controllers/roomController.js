@@ -24,10 +24,8 @@ const createRoom = async (req, res) => {
 const getAllRoomsByUserId = async (req, res) => {
     try {
         const rooms = await roomUser.findMany({
-            where:{userId:Number(req.params.id)},
-            include:{
-                user:true,
-            }
+            where: { userId: Number(req.params.id) },
+            include: { user: true }
         });
         res.status(200).json(rooms);
     } catch (error) {
@@ -55,15 +53,15 @@ const createMessage = async (req, res) => {
 }
 
 
-const getAllMessagesByUserId = async (req, res) => {
+const getAllMessagesByRoomId= async (req, res) => {
     try {
         const messages = await message.findMany({
             where: {
-                userId: Number(req.params.id)
+                roomId: Number(req.params.id)
             },
             include: {
                 user: true,
-                  room: true 
+                 
             }
         });
         res.status(200).json(messages);
@@ -77,5 +75,5 @@ module.exports = {
     createRoom,
     getAllRoomsByUserId,
     createMessage,
-    getAllMessagesByUserId
+    getAllMessagesByRoomId
 };

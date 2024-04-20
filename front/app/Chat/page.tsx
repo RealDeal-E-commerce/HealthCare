@@ -1,36 +1,62 @@
+'use client'
+
 import React, { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 import axios from 'axios';
-import styles from "../styles/Chat.module.css"
+import styles from "../styles/Chat.module.css";
 
 import Navbar from '../components/Navbar';
+import { Message } from '../types/types'; 
+// import { log } from 'console';
 
-const SOCKET_ENDPOINT = 'http://localhost:3001'; // Update this to match your server URL
-const API_ENDPOINT = 'http://localhost:4000';
+const SOCKET_ENDPOINT = 'http://localhost:3001';
+const API_ENDPOINT = 'http://localhost:3002';
 
 function Chat() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState('');
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [userId, setUserId] = useState<number | null>(null); 
+  const [rooms, setRooms] = useState<any[]>([]);
 
   useEffect(() => {
-    const socket = io(SOCKET_ENDPOINT);
+    const socket = io(SOCKET_ENDPOINT); 
     setSocket(socket);
 
-    axios.get(`${API_ENDPOINT}/api/messages`)
+    axios.get(`${API_ENDPOINT}/api/chat/${1}`)
       .then(response => {
-        setMessages(response.data);
+        console.log(response.data[0].userId);
+        
+        axios.get(`http://localhost:3002/api/chat/messages/${response.data[0].userId}`)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.error('Error fetching messages:', error);
+          });
       })
       .catch(error => {
-        console.error('Error fetching messages:', error);
+        console.error('Error fetching userId:', error);
       });
 
-    socket.on('connect_error', (error) => {
-      console.error('Socket connection error:', error);
-    });
-
     socket.on('receive_message', receiveMessage);
-    
+
+
+
+    axios.get(`${API_ENDPOINT}/api/chat/1`)
+    .then(response => {
+      setRooms(response.data); 
+      console.log("data",response.data.roomId);
+
+      
+    })
+    .catch(error => {
+      console.error('Error fetching rooms:', error);
+    });
+  
+
+
+
     return () => {
       if (socket) {
         socket.disconnect();
@@ -38,26 +64,28 @@ function Chat() {
     };
   }, []);
 
-  const receiveMessage = (data) => {
+  const receiveMessage = (data: Message) => {
     setMessages(prevMessages => [...prevMessages, data]);
   };
-  
-  const handleMessageChange = (e) => {
+
+  const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessageInput(e.target.value);
   };
 
   const sendMessage = () => {
-    const newMessage = {
-      id: messages.length + 1,
-      sender: 'You',
+    const newMessage: Message = {
       content: messageInput,
-      timestamp: new Date().toLocaleString(),
+    //   user: , 
+      roomId:2,
+      timestamp: new Date().toLocaleString(), 
+      
     };
-
-    setMessages(prevMessages => [...prevMessages, newMessage]);
-    setMessageInput('');
-
-    axios.post(`${API_ENDPOINT}/api/chat/createmsg`, newMessage)
+    
+    axios.post(`${API_ENDPOINT}/api/chat/createmsg`, {
+      roomId : 2 , 
+      userId: 1,
+      content: newMessage.content,
+    })
       .then(response => {
         console.log('Message saved successfully:', response.data);
       })
@@ -68,32 +96,46 @@ function Chat() {
     if (socket) {
       socket.emit('send_message', newMessage);
     }
+
+    
+    setMessages(prevMessages => [...prevMessages, newMessage]);
+    setMessageInput('');
   };
 
   return (
     <div>
-      <Navbar />
-      <div className={styles.ccontainer}>
+    <Navbar />
+    <div className={styles.ccontainer}>
         <div className={styles.carea}>
-          <div className={styles.mhistory}>
-
-            {messages.map((message, index) => (
-              <div key={index} className={`message ${message.sender === 'You' ? 'sent' : 'received'}`}>
-                <div className={styles.minfo}>
-                  <span className={styles.sender}>{message.sender}</span>
-                  <span className="timestamp">{message.timestamp}</span>
+          <div className={styles.rooms}>
+            {rooms && rooms.length > 0 ? (
+              rooms.map(room => (
+                <div key={room.id} className={styles.room}>
+                  <p>Display room information</p>
                 </div>
-                <p className="content">{message.content}</p>
+              ))
+            ) : (
+              <p>No rooms available</p>
+            )}
+          </div>
+        <div className={styles.mhistory}>
+          {messages.map((message, index) => (
+            <div key={index} className={`message ${message}`}>
+              <div className={styles.minfo}>
+                <span className={styles.sender}>{message?.user?.firstName}</span>
+                <span className="timestamp">{message.timestamp}</span>
               </div>
-            ))}
-          </div>
-          <div className="message-input-area">
-            <input type="text" placeholder="Type a message..." value={messageInput} onChange={handleMessageChange} />
-            <button onClick={sendMessage}>Send</button>
-          </div>
+              <p className="content">{message.content}</p>
+            </div>
+          ))}
+        </div>
+        <div className="message-input-area">
+          <input type="text" placeholder="Type a message..." value={messageInput} onChange={handleMessageChange} />
+          <button onClick={sendMessage}>Send</button>
         </div>
       </div>
     </div>
+  </div>
   );
 }
 

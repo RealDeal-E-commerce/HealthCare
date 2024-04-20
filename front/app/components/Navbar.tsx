@@ -45,8 +45,8 @@ const Navbar: React.FC = () => {
         <Link className={styles.navLink} href="/contact">
          Contact Us
         </Link>
-        <Link className={styles.navLink} href="/bloglist">
-         Blogs
+        <Link href="/Chat">
+         <button className={styles.loginButton}>Chat</button>
         </Link>
         <Link className={styles.navLink} href="/Pharmacy">
           Pharmacy
@@ -60,6 +60,7 @@ const Navbar: React.FC = () => {
         <Link href="/SignUp">
          <button className={styles.loginButton}>Log In</button>
         </Link>
+        
         
         {isLoggedIn ? (
           <div className={styles.dropdown}>

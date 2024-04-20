@@ -67,9 +67,14 @@ export enum UserType {
 }
   
 export interface Message {
-    id: number;
-    content: string;
+  id?: number;
+  content: string;
+  user?: User; 
+  roomId: number; 
+
+  timestamp?: string; 
 }
+
   
   export interface RatingsComment {
     id: number;

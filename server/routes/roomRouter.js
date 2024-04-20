@@ -4,13 +4,13 @@ const {
     createRoom,
     getAllRoomsByUserId,
     createMessage,
-    getAllMessagesByUserId
+    getAllMessagesByRoomId
 }= require('../controllers/roomController');
 
 router.post('/:user1/:user2', createRoom);
 router.get('/:id', getAllRoomsByUserId);
 router.post('/createmsg',createMessage);
-router.get('/messages/:id', getAllMessagesByUserId);
+router.get('/messages/:id', getAllMessagesByRoomId);
 
 
 module.exports=router;
