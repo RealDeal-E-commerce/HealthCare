@@ -20,14 +20,49 @@ const getAllDoctors = async (req, res) => {
 
 const FilterDoctor = async (req, res) => {
     try {
-        prisma.doctor.findUnique( {where: {
-            speciality: req.speciality}},)
-            res.json(sp||null)
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({ error: 'SERVER ERROR' });
+        const { firstName, speciality } = req.query;
+        console.log("First Name:", firstName); 
+        console.log("Speciality:", speciality); 
+
+        let whereCondition = {};
+        if (firstName && speciality) {
+            whereCondition = {
+                AND: [
+                    { firstName: { contains: firstName } },
+                    { 
+                        speciality:{
+                        speciality:speciality
+                       }  
+                     }
+                ]
+            };
+        } else if (firstName) {
+            whereCondition = {
+                firstName: { contains: firstName }
+            };
+        } else if (speciality) {
+            whereCondition = { 
+                speciality:{
+                speciality:speciality
+               }  
+             }
         }
+
+        const doctors = await prisma.user.findMany({
+            where: whereCondition,
+            include: {
+                speciality: true 
+            }
+        });
+
+        console.log("Doctors:", doctors); 
+        res.json(doctors);
+    } catch (error) {
+        console.error("Error:", error); 
+        res.status(500).json({ error: 'SERVER ERROR' });
     }
+}
+
 
 
 

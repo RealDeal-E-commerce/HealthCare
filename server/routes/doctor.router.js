@@ -5,7 +5,7 @@ const doctorController = require('../controllers/doctot.controller');
 
 router.get('/all', doctorController.getAllDoctors);
 
-// router.get('/:id', doctorController.getDoctorById);
+router.get('/', doctorController.FilterDoctor);
 
 // router.post('/', doctorController.createDoctor);
 
