@@ -1,4 +1,4 @@
-const { room ,roomUser,message} = require('../models/prisma');
+const { room ,roomUser,user,message} = require('../models/prisma');
 
 
 
@@ -23,9 +23,56 @@ const createRoom = async (req, res) => {
 
 const getAllRoomsByUserId = async (req, res) => {
     try {
-        const rooms = await roomUser.findMany({
-            where: { userId: Number(req.params.id) },
-            include: { user: true }
+        const rooms = await user.findUnique({
+            where: { id: Number(req.params.id) },
+
+            
+            select: { rooms: {
+
+                select:{
+
+                
+               
+                user : {
+
+                    select:{
+                    id:true,
+                    firstName:true, 
+                    lastName:true, 
+                    imageUrl:true, 
+                    },
+                    
+
+                },
+                
+                room : {
+                    select:{
+                        id:true,
+                        messages:{
+                            select:{
+                                content:true,
+                                id:true,
+
+                                user :{
+                                    select:{
+                                        id:true,          
+                                        firstName: true,
+                                        lastName: true, 
+                                        imageUrl : true,
+                                         
+                                    }
+                                }  
+                            }
+                        }
+
+                        }
+
+                    }
+                }
+  
+             },
+                        // room : true
+                        }
         });
         res.status(200).json(rooms);
     } catch (error) {
