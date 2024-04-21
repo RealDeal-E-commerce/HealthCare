@@ -6,9 +6,11 @@ import { useEffect,useRef } from "react";
 import Navbar from "./components/Navbar";
 import Home from './components/Home'
 import SignUp from './SignUp/page'
-import Profile from "./components/Profile/Profile";
-import Patient from "./components/Profile/Patient";
-import Today from "./components/Profile/Today";
+import Overview from "./components/Profile/Overview/page";
+import Patient from "./doctor/[id]/patient/page";
+import Today from "./doctor/[id]/today/page";
+import Reviews from  "./components/Profile/Review/page";
+import Footer from "./components/Footer";
 
 
 export default function home() {
@@ -22,13 +24,11 @@ useEffect(()=>{
   //  dispatch(fetchUser())
 },[])
 
-
   return (
     <main className="flex min-h-screen flex-col items-center ">
-       <Profile/>
-      <Today/>
-      <Patient/>
-     
+    <Navbar/>
+    <Patient/>
+    <Footer/>
     </main>
   );
 }

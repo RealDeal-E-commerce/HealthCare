@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = "mysql://root:Baha1998@@localhost:3306/doctor"
 }
 enum Role {
   doctor
@@ -129,4 +129,42 @@ enum AppointmentStatus {
 enum PaymentStatus {
   paid
   unpaid
+}
+model Patient {
+  id       Int    @id @default(autoincrement())
+  date      String
+  name      String
+  gender    String
+  disease   String
+  status    String
+  image     String
+}
+
+
+model Doctorr{
+  id            Int      @id @default(autoincrement())
+  name          String
+  gender        String
+  specialization String
+  occupation    String
+  rating        Float
+  image         String
+  // Add other fields as needed
+}
+
+model UserReview {
+  id        Int      @id @default(autoincrement())
+  name      String
+  occupation String
+  review    String
+  rating    Float
+  image     String
+}
+model Todayapp {
+  id        Int      @id @default(autoincrement())
+  name    String
+  date    String
+  time    String
+  type    String
+  image   String
 }

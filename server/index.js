@@ -5,12 +5,15 @@ const cors = require("cors");
 const axios = require("axios");
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
 const db = require('./database-mysql');
+const PatientRouter = require("./routes/Patient.router");
+const Doctorinf = require("./routes/doctorinf.router");
+const review = require("./routes/review.router");
+const todayapp = require("./routes/todayapp.router");
 const doctorRouter = require('./routes/doctor.router');
 const AppointmentRouter = require('./routes/Appointment.router');
 const RatingCommentsRouter = require('./routes/ratingComments.router');
 const messagesRouter = require('./routes/messages.router')
 const payment =require ('./controllers/Payment')
-
 const userRouter = require('./routes/userrouters');
 const Authentication = require('./routes/loginrouters');
 const nodeMailer = require('../server/controllers/nodeMailer');
@@ -93,6 +96,14 @@ app.use('/api/blogs', BlogRouter);
 app.use('/api/comments', CommentRouter);
 app.use('/api/products', ProductRouter);
 app.use('/api/speciality', SpecialityRouter);
+app.use('/api/patients',PatientRouter)
+app.use('/api/doctorinf',Doctorinf)
+app.use('/api/review',review)
+app.use('/api/todayapp',todayapp)
+
+
+
+
 app.post('/api/upload', async (req, res) => {
   try {
     const fileStr = req.files.file.data.toString('base64'); 

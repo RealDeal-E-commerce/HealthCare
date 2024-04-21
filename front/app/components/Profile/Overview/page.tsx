@@ -1,14 +1,27 @@
+'use client'
+
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 import { CgProfile } from "react-icons/cg";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { SiConsul } from "react-icons/si";
 import { IoIosVideocam } from "react-icons/io";
+import { GrOverview } from "react-icons/gr";
+import { CiCalendar } from "react-icons/ci";
+import { FaRegClock } from "react-icons/fa";
+import { MdOutlinePayment } from "react-icons/md";
+import { SlEnvolopeLetter } from "react-icons/sl";
+import { FaBlogger } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
 
-import './Prof.css';
+
+
+
+
+import '../../../styles/Prof.css';
 
 const AppointmentTable = () => {
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(new Date())
 
  const data = [
         {
@@ -76,20 +89,27 @@ const AppointmentTable = () => {
         },
     ];
 
+
+    const handleDateChange = (value: Date | Date[]) => {
+        setSelectedDate(value as Date);
+    };
+
     return (
         <div>
+        <div className="containerrr">
             <div className="bar-side-component">
                 <ul>
-                <li className="button-like">Overview</li>
-          <li className="button-like">Appointment</li>
-          <li className="button-like">My Patients</li>
-          <li className="button-like">Schedule Timings</li>
-          <li className="button-like">Payments</li>
-          <li className="button-like">Message</li>
-          <li className="button-like">Blog</li>
-          <li className="button-like">Settings</li>
+                    <li className="button-like"><GrOverview />Overview</li>
+                    <li className="button-like"><CiCalendar />Appointment</li>
+                    <li className="button-like"><CgProfile />My Patients</li>
+                    <li className="button-like"><FaRegClock />Schedule Timings</li>
+                    <li className="button-like"><MdOutlinePayment />Payments</li>
+                    <li className="button-like"><SlEnvolopeLetter />Message</li>
+                    <li className="button-like"><FaBlogger />Blog</li>
+                    <li className="button-like"><IoMdSettings />Settings</li>
                 </ul>
             </div>
+        </div>
             <div className="containerr">
                 <div className="welcome-message">
                     <p className="welcome-text">Welcome, Dr. Stephen</p>
@@ -166,10 +186,10 @@ const AppointmentTable = () => {
                         </table>
                     </div>
                     <div className="calendar-container">
-                        <Calendar
-                            onChange={setSelectedDate}
-                            value={selectedDate}
-                        />
+                    <Calendar
+        onChange={handleDateChange}
+        value={selectedDate}
+    />
                     </div>
                 </div>
             </div>
