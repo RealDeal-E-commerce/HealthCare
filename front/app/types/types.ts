@@ -59,11 +59,7 @@ export enum UserType {
     Rejected = 'Rejected',
   }
   
-  export interface Doctor {
-    id: number;
-    specialityId: number;
-
-}
+  
   
 export interface Message {
     id: number;
@@ -116,6 +112,7 @@ export interface Message {
   export interface PaginationProps {
     itemsPerPage: number;
     totalItems: number;
+    
     paginate: (pageNumber: number) => void;
   }
 
@@ -123,4 +120,27 @@ export interface Message {
     specialty: []
     status: string;
     error: string | null;  
+  }
+
+  export interface Specialty {
+    id: number;  
+    speciality: string;  
+  }
+
+  export interface Doctor {
+    id: number;
+    specialityId: number;
+
+}
+  
+  export interface DoctorState {
+    entities:[];
+    loading: boolean;
+    error: string | null;
+  }
+
+  export interface Appointment {
+    id: number;
+    date: Date;
+    description: string;
   }
