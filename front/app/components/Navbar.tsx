@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
         <Link className={styles.navLink} href="/">
          HOME
         </Link>
-        <Link className={styles.navLink} href="/service">
+        <Link className={styles.navLink} href="/Appointment">
          Service
         </Link>
         <Link className={styles.navLink} href="/contact">
@@ -61,7 +61,7 @@ const Navbar: React.FC = () => {
          <button className={styles.loginButton}>Log In</button>
         </Link>
         
-        {isLoggedIn ? (
+        {!isLoggedIn ? (
           <div className={styles.dropdown}>
               <img
                 className={styles.profileIcon} 

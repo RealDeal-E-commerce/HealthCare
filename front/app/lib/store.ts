@@ -1,17 +1,19 @@
 import { configureStore,ThunkAction, Action } from '@reduxjs/toolkit'
 import signUpReducer from './SignUpSlice';
 import signInReducer from './SignInSlice';
-import SpecialtySlice from './SpecialtySlice';
-
+import SpecialtyReducer from './SpecialtySlice';
+import doctorReducer from './DoctorSlice';
 import CurrentUserReducer from './CurrentUserSlice';
-
+import appointmentsReducer from './AppointmentSlice';
 export const makeStore = () => {
   return configureStore({
     reducer: {
       currentUser:CurrentUserReducer ,
         signUp: signUpReducer,
         signIn: signInReducer,
-        SpecialtySlice : SpecialtySlice
+        Specialty: SpecialtyReducer,
+        doctors: doctorReducer,
+        appointments: appointmentsReducer,
 
     },
   })
