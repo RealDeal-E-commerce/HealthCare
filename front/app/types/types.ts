@@ -139,3 +139,9 @@ export interface Message {
     loading: boolean;
     error: string | null;
   }
+
+  export interface Appointment {
+    id: number;
+    date: Date;
+    description: string;
+  }

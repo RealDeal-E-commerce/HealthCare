@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
         <Link className={styles.navLink} href="/">
          HOME
         </Link>
-        <Link className={styles.navLink} href="/service">
+        <Link className={styles.navLink} href="/Appointment">
          Service
         </Link>
         <Link className={styles.navLink} href="/contact">

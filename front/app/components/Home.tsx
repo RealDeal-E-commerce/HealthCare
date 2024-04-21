@@ -13,6 +13,8 @@ import { PaginationProps,User ,Specialty} from '../types/types';
 import { useAppSelector, useAppDispatch } from '../lib/hooks';
 import { fetchDoctors } from '../lib/DoctorSlice';
 import { fetchSpecialty } from '../lib/SpecialtySlice';
+
+
 import axios from 'axios';
 
 const Home: React.FC = () => {
@@ -60,6 +62,9 @@ const Home: React.FC = () => {
     } else {
       setFiltred([]);
     }
+  };
+  const handleClick = () => {
+    window.location.href = "/AppointmentCalendar";
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -118,6 +123,9 @@ const Home: React.FC = () => {
             <div className="card-body">
               <h2>{doctor.firstName}</h2>
               <p>{doctor.speciality.speciality}</p>
+              <button  onClick={()=>{handleClick()}}>
+                contact
+              </button>
             </div>
           </div>
         ))}
@@ -150,6 +158,7 @@ const Home: React.FC = () => {
       <TeamMembers />
       <Testimonial />
       <Footer />
+      
     </div>
   );
 };

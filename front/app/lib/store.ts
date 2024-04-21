@@ -4,7 +4,7 @@ import signInReducer from './SignInSlice';
 import SpecialtyReducer from './SpecialtySlice';
 import doctorReducer from './DoctorSlice';
 import CurrentUserReducer from './CurrentUserSlice';
-
+import appointmentsReducer from './AppointmentSlice';
 export const makeStore = () => {
   return configureStore({
     reducer: {
@@ -12,7 +12,8 @@ export const makeStore = () => {
         signUp: signUpReducer,
         signIn: signInReducer,
         Specialty: SpecialtyReducer,
-        doctors: doctorReducer
+        doctors: doctorReducer,
+        appointments: appointmentsReducer,
 
     },
   })
