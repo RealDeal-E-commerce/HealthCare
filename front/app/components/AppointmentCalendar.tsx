@@ -19,8 +19,9 @@ const AppointmentCalendar: React.FC = () => {
 
   return (
     <div>
-      {status === 'loading' ? <p>Loading...</p> : <Calendar />}
-      {/* Handle display of appointments and interactions */}
+    
+      <Calendar />
+      
     </div>
   );
 };

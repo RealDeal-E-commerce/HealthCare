@@ -123,7 +123,7 @@ const Home: React.FC = () => {
             <div className="card-body">
               <h2>{doctor.firstName}</h2>
               <p>{doctor.speciality.speciality}</p>
-              <button  onClick={()=>{handleClick()}}>
+              <button className="ButtonSearch" onClick={()=>{handleClick()}}>
                 contact
               </button>
             </div>
