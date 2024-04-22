@@ -1,11 +1,10 @@
-const jwt = require('jsonwebtoken');
 
-// Middleware function to verify JWT token
+const jwt = require('jsonwebtoken'); 
+const { SECRET_KEY } = process.env; //
 const verifyToken = (req, res, next) => {
-
-    const token = (req.headers['authorization']).split(" ")[1]
-     // Assuming token is passed in the Authorization header
-    console.log("token", token);
+    console.log('Request headers:', req.headers); // Log request headers
+    const token = (req.headers['authorization'] || '').split(" ")[1]; // Ensure 'authorization' header exists
+    console.log("token : ", token);
     if (!token) {
         console.log("inside not");
         return res.status(401).json({ message: 'Unauthorized' });
@@ -17,7 +16,6 @@ const verifyToken = (req, res, next) => {
             return res.status(401).json({ message: 'Unauthorized' });
         }
 
-        // If token is valid, save decoded user information to request object
         req.user = decoded;
         next();
     });

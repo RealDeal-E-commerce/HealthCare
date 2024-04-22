@@ -12,8 +12,13 @@ const todayapp = require("./routes/todayapp.router");
 const doctorRouter = require('./routes/doctor.router');
 const AppointmentRouter = require('./routes/Appointment.router');
 const RatingCommentsRouter = require('./routes/ratingComments.router');
+<<<<<<< HEAD
 const messagesRouter = require('./routes/messages.router')
 const payment =require ('./controllers/Payment')
+=======
+const roomRouter = require('./routes/roomRouter')
+
+>>>>>>> 3e59756247dc49308997be6e98e3e7d4a338f8ca
 const userRouter = require('./routes/userrouters');
 const Authentication = require('./routes/loginrouters');
 const nodeMailer = require('../server/controllers/nodeMailer');
@@ -35,7 +40,7 @@ const io = new Server(server, {
     methods: ["GET", "POST"]
   }
 });
-const PORT = 3001
+const PORT = 3002
 cloudinary.v2.config({
   cloud_name: 'duekcetwe',
   api_key: '313496654712626',
@@ -43,13 +48,10 @@ cloudinary.v2.config({
   secure: true,
 });
 app.use(cors())
-app.use(fileUpload());
 app.use(express.json());
+app.use(fileUpload());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/../client/dist"));
-app.use(cors())
-app.use('/api/messages', messagesRouter);
-// app.use('/api/payment', payment);
 
 app.post('/api/add', async (req, res) => {
   const url = "https://developers.flouci.com/api/generate_payment";
@@ -87,6 +89,7 @@ app.get('/api/verify/:id', async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+/////////////////////////////////////////
 app.use("/api/auth", Authentication);
 app.use('/api/doctors', doctorRouter);
 app.use("/api/Appointment", AppointmentRouter);
@@ -96,6 +99,7 @@ app.use('/api/blogs', BlogRouter);
 app.use('/api/comments', CommentRouter);
 app.use('/api/products', ProductRouter);
 app.use('/api/speciality', SpecialityRouter);
+<<<<<<< HEAD
 app.use('/api/patients',PatientRouter)
 app.use('/api/doctorinf',Doctorinf)
 app.use('/api/review',review)
@@ -104,6 +108,9 @@ app.use('/api/todayapp',todayapp)
 
 
 
+=======
+app.use('/api/chat',roomRouter)
+>>>>>>> 3e59756247dc49308997be6e98e3e7d4a338f8ca
 app.post('/api/upload', async (req, res) => {
   try {
     const fileStr = req.files.file.data.toString('base64'); 

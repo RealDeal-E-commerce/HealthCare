@@ -39,14 +39,14 @@ const Navbar: React.FC = () => {
         <Link className={styles.navLink} href="/">
          HOME
         </Link>
-        <Link className={styles.navLink} href="/service">
+        <Link className={styles.navLink} href="/Appointment">
          Service
         </Link>
         <Link className={styles.navLink} href="/contact">
          Contact Us
         </Link>
-        <Link className={styles.navLink} href="/bloglist">
-         Blogs
+        <Link href="/Chat">
+         <button className={styles.loginButton}>Chat</button>
         </Link>
         <Link className={styles.navLink} href="/Pharmacy">
           Pharmacy
@@ -60,8 +60,8 @@ const Navbar: React.FC = () => {
         <Link href="/SignUp">
          <button className={styles.loginButton}>Log In</button>
         </Link>
-        
-        {isLoggedIn ? (
+
+        {!isLoggedIn ? (
           <div className={styles.dropdown}>
               <img
                 className={styles.profileIcon} 
