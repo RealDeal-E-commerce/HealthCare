@@ -1,44 +1,29 @@
-const { Message } = require('../database-mysql/index');
 
-const getMessages = async (req, res) => {
+
+
+const addMessage = async (req, res) => {
     try {
-        const messages = await Message.findAll();
-        res.status(200).json(messages);
+      const { userId,roomId , content } = req.body;
+      const messages = await message.create({ data: { userId, roomId, content } });
+      res.status(200).send(messages);
     } catch (error) {
-        console.error('Error fetching messages:', error);
-        res.status(500).json({ error: 'Failed to fetch messages' });
+      console.error('Error creating message:', error);
+      res.status(500).json({ error: 'Failed to create message' });
     }
-};
-
-const postMessage = async (req, res) => {
+  };
+  
+  const getAllMessages = async (req, res) => {
     try {
-        const body = req.body;
-        const message = await Message.create(body);
-        res.status(201).json(message);
+      const messages = await message.findMany({});
+      res.status(200).send(messages);
     } catch (error) {
-        console.error('Error sending message:', error);
-        res.status(500).json({ error: 'Failed to send message' });
+      console.error('Error fetching messages:', error);
+      res.status(500).json({ error: 'Failed to fetch messages' });
     }
-};
+  };
 
-const deleteMessage = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const message = await Message.findOne({ where: { id } });
-        if (message) {
-            await message.destroy();
-            res.status(200).json({ message: 'Message deleted successfully' });
-        } else {
-            res.status(404).json({ error: 'Message not found' });
-        }
-    } catch (error) {
-        console.error('Error deleting message:', error);
-        res.status(500).json({ error: 'Failed to delete message' });
-    }
-};
 
-module.exports = {
-    getMessages,
-    postMessage,
-    deleteMessage
-};
+  module.exports={
+    addMessage,
+    getAllMessages
+}

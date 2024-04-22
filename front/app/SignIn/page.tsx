@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { signIn } from '../lib/SignInSlice';
 import Navbar from '../components/Navbar';
 import { useAppDispatch } from '../lib/hooks';
-import styles from '../styles/SignIn.module.css'; // Import styles from the CSS module
+import styles from '../styles/SignIn.module.css'; 
 
 interface SignInProps {
-  login: (body: { email: string; password: string }) => void;
+  login: (body: { email: string; password: string ,userId : Number }) => void;
   error: string;
 }
 
@@ -21,9 +21,11 @@ const SignIn: React.FC<SignInProps> = ({ login, error }) => {
     const body = {
       email,
       password,
+      userId : Number 
     };
     dispatch(signIn(body));
     console.log(email, 'hhhhh');
+    window.location.href = '/Chat';
   };
 
   return (

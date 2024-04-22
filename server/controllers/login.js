@@ -54,7 +54,7 @@ const login = async (req, res) => {
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '4h' });
+    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, { expiresIn: '8h' });
     res.status(200).json({... user, token });
   } catch (error) {
     console.error(error);
@@ -64,24 +64,24 @@ const login = async (req, res) => {
 
 
 
-const getUser = async (req,res)=>{
-  // Access user information from request object
-  try {
-    const currentUser = req.user;
-    const user =await prisma.user.findUnique( {where: {
-      id: currentUser.userId},
-      include: {
-        doctor: true, // Include the posts related to the user
-      },
-    },)
-      // Do something with currentUser
-      res.json(user||null)
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'SERVER ERROR' });
+  const getUser = async (req,res)=>{
+  
+    try {
+      const currentUser = req.user;
+      const user =await prisma.user.findUnique( {where: {
+        id: currentUser.userId},
+        include: {
+          doctor: true, 
+        },
+      },)
+        res.json(user||null)
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'SERVER ERROR' });
+    }
+
   }
 
-}
 
 
 
