@@ -127,6 +127,8 @@ export interface Message {
     status: string;
     error: string | null;  
   }
+<<<<<<< HEAD
+=======
 
   export interface Specialty {
     id: number;  
@@ -150,3 +152,4 @@ export interface Message {
     date: Date;
     description: string;
   }
+>>>>>>> 3e59756247dc49308997be6e98e3e7d4a338f8ca
