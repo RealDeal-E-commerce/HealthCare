@@ -5,14 +5,13 @@ const AppointmentController = require('../controllers/Appointment.controller');
 
 router.get('/', AppointmentController.getAllAppointment);
 
-router.get('/:id', AppointmentController.getAppointmentById);
-
-router.get('/doctor/:DoctorId', AppointmentController.getAllAppointmentOfdoctor);
+router.get('/use/:userId', AppointmentController.getAppointmentByUserId);
+router.get('/doc/:doctorId', AppointmentController.getAppointmentByDoctorId);
 
 router.post('/', AppointmentController.createAppointment);
+router.get('/day/:doctorId', AppointmentController.getdayAvailability);
+router.post('/create', AppointmentController.createdayAvailability);
+router.get('/all', AppointmentController.getAlldayAvailability);
 
-router.put('/:id', AppointmentController.updateAppointment);
-
-router.delete('/:id', AppointmentController.deleteAppointment);
 
 module.exports = router;

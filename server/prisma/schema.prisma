@@ -39,9 +39,23 @@ model User {
   doctorId    Int?     @unique
   specialityId   Int? @unique
   speciality Speciality? @relation(fields: [specialityId], references: [id])
-
   rooms       RoomUser[]
   messages    Message[]
+}
+model RoomUser {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     Int // relation scalar field (used in the `@relation` attribute above)
+  room   Room @relation(fields: [roomId], references: [id])
+  roomId Int // relation scalar field (used in the `@relation` attribute above)
+
+
+  @@id([userId, roomId])
+}
+model Room {
+  id          Int   @unique     @id @default(autoincrement())
+  messages    Message[]
+  users RoomUser[]
+
 }
 
 model Speciality {
@@ -54,8 +68,10 @@ model Doctor {
   id          Int      @id @default(autoincrement())
   appointments Appointment[]
   user  User?
+  days DayAvailability[]
 
 }
+
 
 model Message {
   id          Int   @unique     @id @default(autoincrement())
@@ -83,6 +99,7 @@ model RoomUser {
 model Appointment {
   id                  Int       @id @default(autoincrement())
   appointmentTime     DateTime
+  hour                availabilHours
   status              AppointmentStatus @default(pending)
   paymentStatus       PaymentStatus    @default(unpaid)
   appointmentDepartment String
@@ -90,6 +107,7 @@ model Appointment {
   doctor              Doctor      @relation(fields: [doctorId], references: [id])
   userId              Int
   user                User        @relation(fields: [userId], references: [id])
+
 }
 
 model RatingsComment {
@@ -140,6 +158,34 @@ model Product {
   price    Float
   imageUrl String
   category String
+}
+
+model DayAvailability {
+  id          Int       @id @default(autoincrement())
+  doctor      Doctor    @relation(fields: [doctorId], references: [id])
+  doctorId    Int
+  day         DateTime 
+  hours       Hours[]
+  availability Boolean   @default(true)
+ // Optional: depends on the queries you expect to run
+}
+model Hours{
+id          Int       @id @default(autoincrement())
+day      DayAvailability    @relation(fields: [dayId], references: [id])
+dayId    Int
+hour     availabilHours
+availability Boolean   @default(true)
+}
+enum availabilHours {
+  H0800 
+  H0900 
+  H1000 
+  H1100 
+  H1200 
+  H1300 
+  H1400 
+  H1500 
+  H1600 
 }
 
 enum UserType {

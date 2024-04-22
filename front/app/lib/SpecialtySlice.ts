@@ -5,12 +5,18 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {CurentSpeciality,
 } from '../types/types';
+import { Specialty } from '../types/types';
 
-const initialState : CurentSpeciality = {
-    specialty: [],
-    status: 'idle', // 'idle' | 'loading' | 'succeeded' | 'failed'
-    error: null 
-};
+interface SpecialtyState {
+  specialties: Specialty[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
+const initialState: SpecialtyState = {
+    specialties: [],
+    status: 'idle',
+    error: null
+  };
 
 
 export const fetchSpecialty = createAsyncThunk('specialty', async () => {
@@ -32,7 +38,7 @@ const specialtySlice = createSlice({
             .addCase(fetchSpecialty.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.error = null;
-                state.specialty = action.payload;
+                state.specialties = action.payload;
             })
             .addCase(fetchSpecialty.rejected, (state, action) => {
                 state.status = 'failed';
