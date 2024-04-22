@@ -43,6 +43,7 @@ model User {
   rooms       RoomUser[]
   messages    Message[]
 }
+
 model Speciality {
   id          Int      @id @default(autoincrement())
   speciality  String

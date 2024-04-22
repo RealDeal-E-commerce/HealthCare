@@ -64,23 +64,24 @@ const login = async (req, res) => {
 
 
 
-const getUser = async (req,res)=>{
- 
-  try {
-    const currentUser = req.user;
-    const user =await prisma.user.findUnique( {where: {
-      id: currentUser.userId},
-      include: {
-        doctor: true, 
-      },
-    },)
-      res.json(user||null)
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'SERVER ERROR' });
+  const getUser = async (req,res)=>{
+  
+    try {
+      const currentUser = req.user;
+      const user =await prisma.user.findUnique( {where: {
+        id: currentUser.userId},
+        include: {
+          doctor: true, 
+        },
+      },)
+        res.json(user||null)
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'SERVER ERROR' });
+    }
+
   }
 
-}
 
 
 

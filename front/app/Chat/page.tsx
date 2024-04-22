@@ -1,9 +1,12 @@
 'use client'
+
+
 import React, { useState, useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
 import axios from 'axios';
 import styles from "../styles/Chat.module.css";
-
+import { useAppDispatch } from "../lib/hooks";
+import { fetchCurrentUser } from '../lib/CurrentUserSlice';
 import Navbar from '../components/Navbar';
 import { Message } from '../types/types'; 
 
@@ -13,51 +16,50 @@ const API_ENDPOINT = 'http://localhost:3002';
 function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [messageInput, setMessageInput] = useState('');
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [userId, setUserId] = useState<number | null>(null); 
   const [rooms, setRooms] = useState<any[]>([]);
-
+  const [socket, setSocket] = useState<Socket | null>(null);
+  
+  const dispatch = useAppDispatch();
+  
   useEffect(() => {
     const socket = io(SOCKET_ENDPOINT); 
     setSocket(socket);
-
-    // Fetch userId first
-    // axios.get(`${API_ENDPOINT}/api/chat/${1}`)
-    //   .then(response => {
-    //     const fetchedUserId = response.data[0].userId;
-    //     setUserId(fetchedUserId);
-
-    //     // Fetch messages using the fetched userId
-    //     axios.get(`${API_ENDPOINT}/api/chat/messages/${fetchedUserId}`)
-    //       .then(response => {
-    //         console.log(response.data);
-    //         setMessages(response.data); // Update messages state
-    //       })
-    //       .catch(error => {
-    //         console.error('Error fetching messages:', error);
-    //       });
-    //   })
-    //   .catch(error => {
-    //     console.error('Error fetching userId:', error);
-    //   });
+    
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          throw new Error('Authentication token not found');
+        }
+    
+        const response = await axios.get(`${API_ENDPOINT}/api/auth/getuser`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+    
+        dispatch(fetchCurrentUser(response.data.token));
+        
+        setUserId(response.data.userId);
+    
+        const roomsResponse = await axios.get(`${API_ENDPOINT}/api/chat/1`);
+        setRooms(roomsResponse.data); 
+        console.log("Rooms fetched:", roomsResponse.data);
+        
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
 
     socket.on('receive_message', receiveMessage);
-
-    axios.get(`${API_ENDPOINT}/api/chat/1`)
-      .then(response => {
-        setRooms(response.data); 
-        console.log("data", response.data.roomId);
-      })
-      .catch(error => {
-        console.error('Error fetching rooms:', error);
-      });
 
     return () => {
       if (socket) {
         socket.disconnect();
       }
     };
-  }, []);
+  }, [dispatch]);
 
   const receiveMessage = (data: Message) => {
     setMessages(prevMessages => [...prevMessages, data]);
@@ -70,14 +72,13 @@ function Chat() {
   const sendMessage = () => {
     const newMessage: Message = {
       content: messageInput,
-      roomId: 2, // Modify this as needed
+      roomId: 1, // Modify this as needed
       timestamp: new Date().toLocaleString(), 
     };
 
-    
-    axios.post(`${API_ENDPOINT}/api/chat/createmsg`, {
+    axios.post(`${API_ENDPOINT}/api/chat/createmsg`,{
       roomId: 3, 
-      userId: userId, // Use the fetched userId
+      userId: userId, 
       content: newMessage.content,
     })
       .then(response => {
@@ -104,15 +105,28 @@ function Chat() {
             {rooms && rooms.length > 0 ? (
               rooms.map(room => (
                 <div key={room.id} className={styles.room}>
-                  <p>Display room information</p>
+                  <h3>User: {room.user?.firstName} {room.user?.lastName}</h3>
+                  <div className={styles.messages}>
+                    {room.messages && room.messages.length > 0 ? (
+                      room.messages.map((message: Message) => (
+                        <div key={message.id} className={styles.message}>
+                          <p>Content: {message.content}</p>
+                          <p>Sender: {message.user?.firstName} {message.user?.lastName}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <p>No messages available</p>
+                    )}
+                  </div>
                 </div>
               ))
             ) : (
               <p>No rooms available</p>
             )}
           </div>
+
           <div className={styles.mhistory}>
-            {messages.map((message, index) => (
+            {messages && messages.map((message, index) => (
               <div key={index} className={`message ${message}`}>
                 <div className={styles.minfo}>
                   <span className={styles.sender}>{message?.user?.firstName}</span>

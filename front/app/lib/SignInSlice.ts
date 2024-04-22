@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction,createAsyncThunk} from '@reduxjs/toolkit';
-import { AppThunk } from './store';
+import { AppThunk } from '../lib/store';
 import axios from 'axios'
 import {SignInState} from '../types/types'
 

@@ -21,7 +21,7 @@ const createRoom = async (req, res) => {
     }
 }
 
-const getAllRoomsByUserId = async (req, res) => {
+const getAllRoomsByUserId = async (req, res)=>{
     try {
         const rooms = await user.findUnique({
             where: { id: Number(req.params.id) },
@@ -71,7 +71,7 @@ const getAllRoomsByUserId = async (req, res) => {
                 }
   
              },
-                        // room : true
+                        
                         }
         });
         res.status(200).json(rooms);
